@@ -2,6 +2,8 @@ asect 0x00
 dc main, 0
 align 0x80
 
+init_board:ext
+
 asect 0x0080
 #func:ext
 main:
@@ -18,6 +20,9 @@ main:
 
     ldi r0, 0x10
     ldi r2, 0xfffe
+
+    jsr init_board 
+
     gamepad_read_loop:
         # gamepad state detection loop
         # after reading from memory adress 0xfffe the gamepad state is obtained

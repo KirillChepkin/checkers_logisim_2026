@@ -2,11 +2,22 @@ asect 0x00
 dc main, 0
 align 0x80
 
-init_board:ext
-
 asect 0x0080
 #func:ext
 main:
+
+    # this code initializes the board
+
+    ldi r6, 0xff80
+    ldi r7, 0b1
+    
+    stw r6, r7
+    add r6, 8
+    stw r6, r7
+    add r6, 2
+    #st r6, r7
+
+    #
 
     # the following 3 strings set the state of the checker_select device
     ldi r3, 0xfffc
@@ -20,8 +31,6 @@ main:
 
     ldi r0, 0x10
     ldi r2, 0xfffe
-
-    jsr init_board 
 
     gamepad_read_loop:
         # gamepad state detection loop

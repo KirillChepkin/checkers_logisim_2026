@@ -1,21 +1,21 @@
-static int* gs_adress = (int*)(0xfffa); // adress of the game_status
-static int* cs_adress = (int*)(0xfffc); // adress of the checker_celect
-static int* gp_adress = (int*)(0xfffe); // adress of the gamepad
-static int* cb_adress = (int*)(0xff80); // adress of the checkerboard
+static int* gs_address = (int*)(0xfffa); // address of the game_status
+static int* cs_address = (int*)(0xfffc); // address of the checker_celect
+static int volatile* gp_address = (int*)(0xfffe); // address of the gamepad
+static int* cb_address = (int*)(0xff80); // address of the checkerboard
 
 static inline void set_status(int a) {
     // метод для вывода статуса игры
-    *gs_adress = a;
+    *gs_address = a;
 }
 
 static inline void set_select(int row, int column) {
     // метод для подсвечивания выбранной шашки
-    *cs_adress = row + (column << 3);
+    *cs_address = row + (column << 3);
 }
 
 static inline int read_gamepad() {
     // метод для считывания кода состояния геймпада
-    int state = gp_adress[0];
+    int state = gp_address[0];
     for (int i = 1; i < 7; i++) {
         if ((state & 1) == 1) {
             return i;
@@ -52,7 +52,7 @@ static inline void modify_cell(int row, int column, int new_state) {
     // метод для изменения состояния клетки доски с данным индексом
     state_matrix[row][column] = new_state;
     int cell = index_to_cell(row, column);
-    *(cb_adress + (cell >> 1)) = new_state;
+    *(cb_address + (cell >> 1)) = new_state;
 }
 
 static inline void init_board() {
@@ -60,17 +60,17 @@ static inline void init_board() {
     int black = 2;
     int white = 0;
     for (int i = 0; i < 4; i++) {
-        cb_adress[white] = 1;
+        cb_address[white] = 1;
         white += 4;
-        cb_adress[white] = 1;
+        cb_address[white] = 1;
         white++;
-        cb_adress[white] = 1;
+        cb_address[white] = 1;
 
-        cb_adress[black] = 2;
+        cb_address[black] = 2;
         black++;
-        cb_adress[black] = 2;
+        cb_address[black] = 2;
         black += 4;
-        cb_adress[black] = 2;
+        cb_address[black] = 2;
 
         white += 3;
         black += 3;
@@ -82,57 +82,65 @@ static inline void move_checker(int row, int column, int direction) {
 }
 
 static inline void input_loop() {
-    int g = 0;
     set_status(2);
-    int search = 1;
-    /* этот цикл ищет близжайшую шашку игрока и подсвечивает ее,
-    а потом позволяет выбрать любую другую */ 
-    for (int i = 0; (i < 8) && (search == 1); i++) {
-        for (int j = 0; (j < 8) && (search == 1); j++) {
-            if (state_matrix[i][j] == 1) {
-                set_select(i, j);
-                while (1) {
-                    if (g == 1) {
-                        break;
+    int g = 0;
+    int checker_chosen = 0;
+    while (checker_chosen == 0) {
+        for (int i = 0; (i < 8); i++) {
+            for (int j = 0; (j < 8); j++) {
+                // проверяет, есть ли шашка на позиции
+                if (state_matrix[i][j] == 1) {
+                    set_select(i, j);
+                    // если есть, то ожидает нажатия
+                    while (g == 0) {
+                        g = read_gamepad();
                     }
-                    else if (g != 0 && g != 6) {
-                        search = 0;
-                        break;
-                    } 
-                    g = read_gamepad();
                 }
+                // если была нажата кнопка с направлением, то переходит к перемещению
+                if (g > 1) {
+                    goto ds;
+                }
+                g = 0;
             }
-            if (j == 7) {
-                j = 0;
-            }
-        }
-        if (i == 7) {
-            i = 0;
         }
     }
+    ds:
+    set_status(3);
 }
 
 int main_func() {
     // функция, которая будет работать в качестве main
-    int g;
     set_status(2);
     set_select(2, 1);
     init_board();
-    /* *((int*)0x220) = index_to_cell(1, 2);
-    *((int*)0x222) = index_to_cell(6, 7);
-    *((int*)0x224) = index_to_cell(1, 4);
-    *((int*)0x226) = index_to_cell(4, 3);
-    *((int*)0x228) = index_to_cell(7, 2);
-    modify_cell(1, 2, 1);
-    modify_cell(6, 7, 2);
-    modify_cell(1, 4, 1);
-    modify_cell(4, 3, 1);
-    modify_cell(7, 2, 2); */
 
-    /* modify_cell(0, 3, 1); */
+    input_loop();
 
-    /* g = read_gamepad();
-    set_status(g);
-    *((int*)0x220) = index_to_cell(1, 1); */
+    /* int g = 0;
+    int checker_chosen = 0;
+    while (checker_chosen == 0) {
+        for (int i = 0; (i < 8); i++) {
+            for (int j = 0; (j < 8); j++) {
+                if (state_matrix[i][j] == 1) {
+                    set_select(i, j);
+                    while (g == 0) {
+                        g = read_gamepad();
+                    }
+                }
+                g = 0;
+            }
+        }
+    }
+    direction_select:
+    set_status(3); */
+
+
+    /* int g = 0;
+    while (1) {
+        g = read_gamepad();
+        if (g != 0) {
+            *((volatile int*)0x220) = g;
+        }
+    } */
     return 0;
 }

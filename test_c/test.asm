@@ -3,12 +3,12 @@ dc main, 0
 align 0x80
 
 asect 0x0080
-#func:ext
 
-func:
-rts
+main_func: ext
+
 main:
-    jsr func
+    addsp -256
+    jsr main_func
 halt
 
 

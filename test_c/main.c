@@ -1,3 +1,5 @@
+#include "funcs.h"
+
 static int* gs_address = (int*)(0xfffa); // address of the game_status
 static int* cs_address = (int*)(0xfffc); // address of the checker_celect
 static int volatile* gp_address = (int*)(0xfffe); // address of the gamepad
@@ -113,34 +115,6 @@ int main_func() {
     set_status(2);
     set_select(2, 1);
     init_board();
-
     input_loop();
-
-    /* int g = 0;
-    int checker_chosen = 0;
-    while (checker_chosen == 0) {
-        for (int i = 0; (i < 8); i++) {
-            for (int j = 0; (j < 8); j++) {
-                if (state_matrix[i][j] == 1) {
-                    set_select(i, j);
-                    while (g == 0) {
-                        g = read_gamepad();
-                    }
-                }
-                g = 0;
-            }
-        }
-    }
-    direction_select:
-    set_status(3); */
-
-
-    /* int g = 0;
-    while (1) {
-        g = read_gamepad();
-        if (g != 0) {
-            *((volatile int*)0x220) = g;
-        }
-    } */
     return 0;
 }

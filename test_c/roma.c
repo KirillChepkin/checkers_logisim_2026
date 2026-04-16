@@ -3,35 +3,35 @@ static int* cs_address = (int*)(0xfffc); // address of the checker_celect
 static int volatile* gp_address = (int*)(0xfffe); // address of the gamepad
 static int* cb_address = (int*)(0xff80); // address of the checkerboard
 
-static int EMPTY_BLACK_SQUARE = 0;
-static int WHITE_CHECKER = 1;
-static int BLACK_CHECKER = 2;
-static int WHITE_KING = 3;
-static int BLACK_KING = 4;
+const static int EMPTY_BLACK_SQUARE = 0;
+const static int WHITE_CHECKER = 1;
+const static int BLACK_CHECKER = 2;
+const static int WHITE_KING = 3;
+const static int BLACK_KING = 4;
 
-static int IMPOSSIBLE_MOVE = 1;
-static int CHOOSE_CHECKER = 2;
-static int CHOOSE_DIRECTION = 3;
-static int OPPONENT_MOVE = 4;
-static int PLAYER_WIN = 5;
-static int PLAYER_LOSE = 6;
-static int PLAYER_DRAW = 7;
+const static int IMPOSSIBLE_MOVE = 1;
+const static int CHOOSE_CHECKER = 2;
+const static int CHOOSE_DIRECTION = 3;
+const static int OPPONENT_MOVE = 4;
+const static int PLAYER_WIN = 5;
+const static int PLAYER_LOSE = 6;
+const static int PLAYER_DRAW = 7;
 
-static int NEXT_CHECKER = 1;
-static int RIGHT_UP = 2; //В СХЕМЕ 1, read_gamepad() выдаст 2
-static int LEFT_UP = 3;
-static int RIGHT_DOWN = 4;
-static int LEFT_DOWN = 5;
-static int END_MOVE = 6;
+const static int NEXT_CHECKER = 1;
+const static int RIGHT_UP = 2; //В СХЕМЕ 1, read_gamepad() выдаст 2
+const static int LEFT_UP = 3;
+const static int RIGHT_DOWN = 4;
+const static int LEFT_DOWN = 5;
+const static int END_MOVE = 6;
 
-static int WHITE = 0;
-static int BLACK = 1;
+const static int WHITE = 0;
+const static int BLACK = 1;
 
-static int NO_MOVE = 0;
-static int MOVE_NO_TAKE = 1;
-static int MOVE_TAKE = 2;
+const static int NO_MOVE = 0;
+const static int MOVE_NO_TAKE = 1;
+const static int MOVE_TAKE = 2;
 
-static int LIMIT_MOVES_NO_TAKES = 20;
+const static int LIMIT_MOVES_NO_TAKES = 20;
 
 
 static inline void set_status(int a) {
@@ -152,28 +152,30 @@ static inline int execute_move(int row, int column, int direction) {
             return 0;
         } else {
             int d_row = delta_row[direction], d_column = delta_column[direction];
+            int tek_state = state_matrix[row][column];
             if (res == 1) {
                 modify_cell(row, column, EMPTY_BLACK_SQUARE);
-                modify_cell(row + d_row, column + d_column, state_matrix[row][column]);
+                modify_cell(row + d_row, column + d_column, tek_state);
                 return 1;
             } else {
                 modify_cell(row, column, EMPTY_BLACK_SQUARE);
                 modify_cell(row + d_row, column + d_column, EMPTY_BLACK_SQUARE);
-                modify_cell(row + (d_row << 1), column + (d_column << 1), state_matrix[row][column]);
+                modify_cell(row + (d_row << 1), column + (d_column << 1), tek_state);
                 return 1;
             }
         }
     } else {
         //бот не тупит, невозможный ход не сделает
         int d_row = delta_row[direction], d_column = delta_column[direction];
+        int tek_state = state_matrix[row][column];
         if (res == 1) {
             modify_cell(row, column, EMPTY_BLACK_SQUARE);
-            modify_cell(row + d_row, column + d_column, state_matrix[row][column]);
+            modify_cell(row + d_row, column + d_column, tek_state);
             return 1;
         } else {
             modify_cell(row, column, EMPTY_BLACK_SQUARE);
             modify_cell(row + d_row, column + d_column, EMPTY_BLACK_SQUARE);
-            modify_cell(row + (d_row << 1), column + (d_column << 1), state_matrix[row][column]);
+            modify_cell(row + (d_row << 1), column + (d_column << 1), tek_state);
             return 1;
         }
     }
@@ -321,8 +323,8 @@ int main_func() {
     int which_move = WHITE;
     while (!check_game_over(which_move)) {
         if (which_move == WHITE) {
-            input_loop();
-            input_direction();
+            input_loop(); //выбор шашки 
+            input_direction(); //выбор направления
             if (!execute_move(chosen_row, chosen_col, chosen_direction)) {
                 return 0;
             }

@@ -95,6 +95,10 @@ static inline void modify_cell(int row, int column, int new_state) {
 static int delta_row[6] = {-52, -52, -1, -1, 1, 1};
 static int delta_column[6] = {-52, -52, 1, -1, 1, -1};
 
+static int chosen_row = 0;
+static int chosen_col = 0;
+static int chosen_direction = 0;
+
 static inline int try_move(int row, int column, int direction) {
     int d_row = delta_row[direction], d_column = delta_column[direction];
     int row_new = row + d_row, column_new = column + d_column;
@@ -161,6 +165,9 @@ static inline int execute_move(int row, int column, int direction) {
                 modify_cell(row, column, EMPTY_BLACK_SQUARE);
                 modify_cell(row + d_row, column + d_column, EMPTY_BLACK_SQUARE);
                 modify_cell(row + (d_row << 1), column + (d_column << 1), tek_state);
+                chosen_row = row + (d_row << 1);
+                chosen_col = column + (d_column << 1);
+                set_select(chosen_row, chosen_col);
                 return 1;
             }
         }
@@ -248,10 +255,6 @@ static inline void init_board() {
     }
 }
 
-static int chosen_row = 0;
-static int chosen_col = 0;
-static int chosen_direction = 0;
-
 static inline void input_loop() {
     set_status(CHOOSE_CHECKER);
     int g = 0;
@@ -314,7 +317,55 @@ static inline void zero_iq_strategy_bot() {
     }
     ds2:;
 }
-
+static inline int bot_first_move() {
+    //первый ход может быть НЕ ВЗЯТИЕ!
+    //1 - просто ход, 2 - взятие
+    //вначале пытаемся взять, если возможно
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (state_matrix[i][j] == BLACK_CHECKER || state_matrix[i][j] == BLACK_KING) {
+                for (int dir = 2; dir <= 5; dir++) {
+                    int resbot1 = try_move(i, j, dir);
+                    if (resbot1 == 2) {
+                        chosen_row = i + (delta_row[dir] << 1);
+                        chosen_col = j + (delta_column[dir] << 1);
+                        execute_move(i, j, dir);
+                        return 2;
+                    }
+                }
+            }
+        }
+    }
+    //если нет вариантов со взятием, то просто делаем ход
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (state_matrix[i][j] == BLACK_CHECKER || state_matrix[i][j] == BLACK_KING) {
+                for (int dir = 2; dir <= 5; dir++) {
+                    int resbot1 = try_move(i, j, dir);
+                    if (resbot1 == 1) {
+                        execute_move(i, j, dir);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+static inline int bot_next_move() {
+    //бот уже выбрал шашку (chosen_row, chosen_column), и теперь он должен выбрать БРАТЬ или ПРОПУСКАТЬ
+    //0 - отсутствие хода, 2 - взятие
+    for (int dir = 2; dir <= 5; dir++) {
+        int resbot1 = try_move(chosen_row, chosen_col, dir);
+        if (resbot1 == 2) {
+            execute_move(chosen_row, chosen_col, dir);
+            chosen_row += (delta_row[dir] << 1);
+            chosen_col += (delta_column[dir] << 1);
+            return 2;
+        }
+    }
+    return 0;
+}
 int main_func() {
     // функция, которая будет работать в качестве main
     set_status(CHOOSE_CHECKER);
@@ -325,13 +376,55 @@ int main_func() {
         if (which_move == WHITE) {
             input_loop(); //выбор шашки 
             input_direction(); //выбор направления
-            if (!execute_move(chosen_row, chosen_col, chosen_direction)) {
+            if (chosen_direction == END_MOVE) {
+                //нельзя просто так передавать ход
+                set_status(IMPOSSIBLE_MOVE);
                 return 0;
+            }
+            int res = try_move(chosen_row, chosen_col, chosen_direction);
+            if (res == 0) {
+                set_status(IMPOSSIBLE_MOVE);
+                return 0;
+            } else if (res == 1) {
+                //обычный ход без взятия
+                execute_move(chosen_row, chosen_col, chosen_direction);
+                count_moves_no_takes++;
+            } else {
+                //взятие => эта же шашка может дальше ходить НО ТОЛЬКО РУБИТЬ 
+                execute_move(chosen_row, chosen_col, chosen_direction);
+                count_moves_no_takes = 0;
+                //далее ждем пока игрок САМ ПРЕКРАТИТ ХОД
+                while (1) {
+                    input_direction();
+                    if (chosen_direction == END_MOVE) {
+                        break; 
+                    }
+                    int res2 = try_move(chosen_row, chosen_col, chosen_direction);
+                    if (res2 != 2) {
+                        set_status(IMPOSSIBLE_MOVE);
+                        return 0;
+                    }
+                    execute_move(chosen_row, chosen_col, chosen_direction);
+                }
+
             }
             which_move = BLACK;
             set_status(OPPONENT_MOVE);
         } else {
-            zero_iq_strategy_bot();
+            //zero_iq_strategy_bot(); его тоже на всякий случай сохраняем
+            int res_bot_1 = bot_first_move();
+            if (res_bot_1 == 2) {
+                //бот имеет права ходить но только этой шашкой и только рубить
+                count_moves_no_takes = 0;
+                while (1) {
+                    int res_bot_2 = bot_next_move();
+                    if (res_bot_2 == 0) {
+                        break;
+                    }
+                }
+            } else {
+                count_moves_no_takes++;
+            }
             which_move = WHITE;
             set_status(CHOOSE_CHECKER);
         }

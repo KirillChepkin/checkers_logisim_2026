@@ -1,5 +1,5 @@
 ### SECTION: .text
-rsect _roma_c_16807
+rsect _roma_c_1804289383
 
 
 
@@ -1765,7 +1765,7 @@ execute_move:                           # -- Begin function execute_move
 # %bb.0:                                # %entry
 	push	fp
 	ldsp	fp
-	addsp	-12
+	addsp	-14
 	ssw	r4, -2                          # 2-byte Folded Spill
 	ssw	r5, -4                          # 2-byte Folded Spill
 	ssw	r6, -6                          # 2-byte Folded Spill
@@ -1777,279 +1777,269 @@ execute_move:                           # -- Begin function execute_move
 	ssw	r4, -8                          # 2-byte Folded Spill
 	shl	r4, r0, 1
 	shl	r5, r2, 4
-	add r2, r0, r0
-	ldi	r2, state_matrix
-	add r0, r2, r3
-	ldw	r0, r2, r2
-	ldi	r4, 2
-	or r2, r4, r4
-	ldi	r2, 3
-	cmp	r4, r2
+	add r2, r0, r2
+	ldi	r0, state_matrix
+	add r2, r0, r4
+	ldw	r2, r0, r3
+	ldi	r0, 2
+	ssw	r3, -10                         # 2-byte Folded Spill
+	or r3, r0, r0
+	ldi	r3, 3
+	cmp	r0, r3
 	beq	__LBB1_1
 	br	__LBB1_22
 __LBB1_1:                               # %if.then
-	ldi	r2, 0
-	cmp	r1, r2
+	ldi	r0, 0
+	cmp	r1, r0
 	bne	__LBB1_3
 	br	__LBB1_2
 __LBB1_3:                               # %if.else
-	stw	r3, r2
+	stw	r4, r0
+	ldi	r3, index_to_cell.cell_map
+	ldw	r2, r3, r2
+	ldi	r3, -2
+	and r2, r3, r2
+	ldi	r3, -128
+	stw	r2, r3, r0
+	shl	r6, r3, 1
+	ldi	r2, delta_row
+	ldw	r3, r2, r2
+	ldi	r4, delta_column
+	ldw	r3, r4, r4
+	lsw	r3, -8                          # 2-byte Folded Reload
+	add r4, r3, r6
+	add r2, r5, r3
+	ldi	r0, 1
+	cmp	r1, r0
+	bne	__LBB1_13
+	br	__LBB1_4
+__LBB1_4:                               # %if.then12
+	movens	r6, r5
 	ldi	r4, index_to_cell.cell_map
-	ldw	r0, r4, r0
-	ldi	r4, -2
-	and r0, r4, r0
-	ldi	r4, -128
-	stw	r0, r4, r2
+	ldi	r1, 3
+	ldi	r0, 0
+	cmp	r3, r0
+	lsw	r0, -10                         # 2-byte Folded Reload
+	beq	__LBB1_6
+# %bb.5:                                # %if.then12
+	movens	r0, r1
+__LBB1_6:                               # %if.then12
+	ldi	r6, 1
+	cmp	r0, r6
+	beq	__LBB1_8
+# %bb.7:                                # %if.then12
+	movens	r0, r1
+__LBB1_8:                               # %if.then12
+	ldi	r0, 4
+	ldi	r2, 2
+	cmp	r1, r2
+	beq	__LBB1_10
+# %bb.9:                                # %if.then12
+	movens	r1, r0
+__LBB1_10:                              # %if.then12
+	ldi	r2, 7
+	cmp	r3, r2
+	beq	__LBB1_12
+# %bb.11:                               # %if.then12
+	movens	r1, r0
+__LBB1_12:                              # %if.then12
+	shl	r5, r1, 1
+	shl	r3, r2, 4
+	add r2, r1, r1
+	ldi	r2, state_matrix
+	stw	r1, r2, r0
+	ldw	r1, r4, r1
+	ldi	r2, -2
+	and r1, r2, r1
+	ldi	r2, -128
+	stw	r1, r2, r0
+	br	__LBB1_41
+__LBB1_22:                              # %if.else22
+	ldi	r0, 0
+	stw	r4, r0
+	movens	r0, r4
+	ldi	r0, index_to_cell.cell_map
+	ldw	r2, r0, r0
+	ldi	r2, -2
+	and r0, r2, r0
+	ldi	r2, -128
+	stw	r0, r2, r4
 	shl	r6, r0, 1
-	ldi	r4, delta_row
-	ldw	r0, r4, r2
+	ldi	r2, delta_row
+	ldw	r0, r2, r2
 	ldi	r4, delta_column
 	ldw	r0, r4, r4
 	lsw	r0, -8                          # 2-byte Folded Reload
-	add r4, r0, r6
-	ssw	r2, -10                         # 2-byte Folded Spill
+	add r4, r0, r0
+	ssw	r0, -12                         # 2-byte Folded Spill
 	add r2, r5, r0
-	ldi	r2, 1
-	cmp	r1, r2
-	bne	__LBB1_13
-	br	__LBB1_4
-__LBB1_4:                               # %if.then10
-	ldi	r2, 0
-	ldw	r3, r3
-	ldi	r1, 3
-	ldi	r5, 1
-	cmp	r3, r5
-	beq	__LBB1_6
-# %bb.5:                                # %if.then10
-	movens	r3, r1
-__LBB1_6:                               # %if.then10
-	cmp	r0, r2
+	ldi	r6, 1
+	cmp	r1, r6
+	bne	__LBB1_32
+	br	__LBB1_23
+__LBB1_23:                              # %if.then31
+	lsw	r5, -12                         # 2-byte Folded Reload
 	ldi	r4, index_to_cell.cell_map
-	beq	__LBB1_8
-# %bb.7:                                # %if.then10
-	movens	r3, r1
-__LBB1_8:                               # %if.then10
+	ldi	r1, 3
+	ldi	r2, 0
+	cmp	r0, r2
+	lsw	r2, -10                         # 2-byte Folded Reload
+	beq	__LBB1_25
+# %bb.24:                               # %if.then31
+	movens	r2, r1
+__LBB1_25:                              # %if.then31
+	cmp	r2, r6
+	beq	__LBB1_27
+# %bb.26:                               # %if.then31
+	movens	r2, r1
+__LBB1_27:                              # %if.then31
 	ldi	r2, 4
 	ldi	r3, 2
 	cmp	r1, r3
-	beq	__LBB1_10
-# %bb.9:                                # %if.then10
+	beq	__LBB1_29
+# %bb.28:                               # %if.then31
 	movens	r1, r2
-__LBB1_10:                              # %if.then10
+__LBB1_29:                              # %if.then31
 	ldi	r3, 7
 	cmp	r0, r3
-	beq	__LBB1_12
-# %bb.11:                               # %if.then10
+	beq	__LBB1_31
+# %bb.30:                               # %if.then31
 	movens	r1, r2
-__LBB1_12:                              # %if.then10
-	shl	r6, r1, 1
+__LBB1_31:                              # %if.then31
+	shl	r5, r1, 1
 	shl	r0, r0, 4
 	add r0, r1, r0
 	ldi	r1, state_matrix
 	stw	r0, r1, r2
 	ldw	r0, r4, r0
-	ldi	r1, -2
-	and r0, r1, r0
-	ldi	r1, -128
-	stw	r0, r1, r2
-	br	__LBB1_41
-__LBB1_22:                              # %if.else23
-	ldi	r4, 0
-	stw	r3, r4
-	ldi	r4, index_to_cell.cell_map
-	ldw	r0, r4, r0
-	ldi	r4, -2
-	and r0, r4, r0
-	ssw	r0, -10                         # 2-byte Folded Spill
-	ldi	r4, 0
-	ldi	r0, -128
-	ssw	r3, -12                         # 2-byte Folded Spill
-	lsw	r3, -10                         # 2-byte Folded Reload
-	stw	r3, r0, r4
-	shl	r6, r4, 1
-	ldi	r0, delta_row
-	ldw	r4, r0, r0
-	ldi	r6, delta_column
-	ldw	r4, r6, r6
-	lsw	r4, -8                          # 2-byte Folded Reload
-	ssw	r6, -10                         # 2-byte Folded Spill
-	add r6, r4, r4
-	add r0, r5, r6
-	ldi	r3, 1
-	cmp	r1, r3
-	bne	__LBB1_32
-	br	__LBB1_23
-__LBB1_23:                              # %if.then29
-	ldi	r2, 0
-	lsw	r0, -12                         # 2-byte Folded Reload
-	ldw	r0, r0
-	ldi	r1, 3
-	ldi	r5, 1
-	cmp	r0, r5
-	beq	__LBB1_25
-# %bb.24:                               # %if.then29
-	movens	r0, r1
-__LBB1_25:                              # %if.then29
-	cmp	r6, r2
-	ldi	r3, state_matrix
-	beq	__LBB1_27
-# %bb.26:                               # %if.then29
-	movens	r0, r1
-__LBB1_27:                              # %if.then29
-	ldi	r2, 4
-	ldi	r0, 2
-	cmp	r1, r0
-	beq	__LBB1_29
-# %bb.28:                               # %if.then29
-	movens	r1, r2
-__LBB1_29:                              # %if.then29
-	ldi	r0, 7
-	cmp	r6, r0
-	beq	__LBB1_31
-# %bb.30:                               # %if.then29
-	movens	r1, r2
-__LBB1_31:                              # %if.then29
-	shl	r4, r0, 1
-	shl	r6, r1, 4
-	add r1, r0, r0
-	stw	r0, r3, r2
-	ldi	r1, index_to_cell.cell_map
-	ldw	r0, r1, r0
 	ldi	r1, -2
 	and r0, r1, r0
 	ldi	r1, -128
 	stw	r0, r1, r2
 	br	__LBB1_41
 __LBB1_2:                               # %if.then6
-	ldi	r0, -6
-	ldi	r1, 1
-	stw	r0, r1
-	movens	r2, r5
+	ldi	r1, -6
+	ldi	r2, 1
+	stw	r1, r2
+	movens	r0, r6
 	br	__LBB1_41
 __LBB1_13:                              # %if.else14
 	ssw	r4, -12                         # 2-byte Folded Spill
 	shl	r6, r1, 1
-	shl	r0, r0, 4
-	add r0, r1, r0
+	shl	r3, r3, 4
+	add r3, r1, r3
+	shl	r2, r1, 1
+	add r1, r5, r1
 	ldi	r4, state_matrix
-	ldi	r6, 0
-	stw	r0, r4, r6
-	ldi	r1, index_to_cell.cell_map
-	ldw	r0, r1, r0
-	ldi	r1, -2
-	and r0, r1, r0
-	movens	r6, r4
-	ldi	r1, -128
-	stw	r0, r1, r6
-	lsw	r0, -10                         # 2-byte Folded Reload
-	shl	r0, r0, 1
-	add r0, r5, r1
-	ldw	r3, r0
+	ldi	r0, 0
+	stw	r3, r4, r0
+	ldi	r2, index_to_cell.cell_map
+	ldw	r3, r2, r2
+	ldi	r3, -2
+	and r2, r3, r2
+	ldi	r5, -128
+	stw	r2, r5, r0
 	ldi	r3, 3
-	ldi	r5, 1
-	cmp	r0, r5
+	cmp	r1, r0
+	lsw	r0, -10                         # 2-byte Folded Reload
 	beq	__LBB1_15
 # %bb.14:                               # %if.else14
 	movens	r0, r3
 __LBB1_15:                              # %if.else14
-	cmp	r1, r4
+	ldi	r6, 1
+	cmp	r0, r6
 	beq	__LBB1_17
 # %bb.16:                               # %if.else14
 	movens	r0, r3
 __LBB1_17:                              # %if.else14
-	ldi	r2, 4
-	ldi	r0, 2
-	cmp	r3, r0
-	ldi	r6, index_to_cell.cell_map
+	ldi	r0, 4
+	ldi	r2, 2
+	cmp	r3, r2
 	beq	__LBB1_19
 # %bb.18:                               # %if.else14
-	movens	r3, r2
+	movens	r3, r0
 __LBB1_19:                              # %if.else14
-	ldi	r0, 7
-	cmp	r1, r0
+	ldi	r2, 7
+	cmp	r1, r2
 	beq	__LBB1_21
 # %bb.20:                               # %if.else14
-	movens	r3, r2
+	movens	r3, r0
 __LBB1_21:                              # %if.else14
-	lsw	r0, -12                         # 2-byte Folded Reload
-	shl	r0, r0, 1
+	lsw	r2, -12                         # 2-byte Folded Reload
+	shl	r2, r2, 1
 	lsw	r3, -8                          # 2-byte Folded Reload
-	add r0, r3, r0
-	shl	r0, r0, 1
+	add r2, r3, r2
+	shl	r2, r2, 1
 	shl	r1, r1, 4
-	add r1, r0, r0
-	ldi	r1, state_matrix
-	stw	r0, r1, r2
-	ldw	r0, r6, r0
-	ldi	r1, -2
-	and r0, r1, r0
-	ldi	r1, -128
-	stw	r0, r1, r2
+	add r1, r2, r1
+	stw	r1, r4, r0
+	ldi	r2, index_to_cell.cell_map
+	ldw	r1, r2, r1
+	ldi	r2, -2
+	and r1, r2, r1
+	stw	r1, r5, r0
 	br	__LBB1_41
 __LBB1_32:                              # %if.else34
-	shl	r4, r1, 1
-	shl	r6, r4, 4
-	add r4, r1, r1
+	ssw	r4, -14                         # 2-byte Folded Spill
+	lsw	r1, -12                         # 2-byte Folded Reload
+	shl	r1, r1, 1
+	shl	r0, r0, 4
+	add r0, r1, r1
+	shl	r2, r0, 1
+	add r0, r5, r0
 	ldi	r4, state_matrix
-	movens	r4, r6
-	ldi	r4, 0
-	stw	r1, r6, r4
-	ldi	r6, index_to_cell.cell_map
-	ldw	r1, r6, r1
-	ldi	r6, -2
-	and r1, r6, r1
+	ldi	r2, 0
+	stw	r1, r4, r2
+	ldi	r5, index_to_cell.cell_map
+	ldw	r1, r5, r1
+	ldi	r5, -2
+	and r1, r5, r1
 	ldi	r6, -128
-	stw	r1, r6, r4
-	shl	r0, r0, 1
-	add r0, r5, r1
-	lsw	r0, -12                         # 2-byte Folded Reload
-	ldw	r0, r0
-	ldi	r5, 1
-	cmp	r0, r5
+	stw	r1, r6, r2
+	cmp	r0, r2
+	lsw	r1, -10                         # 2-byte Folded Reload
 	beq	__LBB1_34
 # %bb.33:                               # %if.else34
-	movens	r0, r2
+	movens	r1, r3
 __LBB1_34:                              # %if.else34
-	ldi	r3, 0
-	cmp	r1, r3
+	ldi	r6, 1
+	cmp	r1, r6
 	beq	__LBB1_36
 # %bb.35:                               # %if.else34
-	movens	r0, r2
+	movens	r1, r3
 __LBB1_36:                              # %if.else34
-	ldi	r3, 4
-	ldi	r0, 2
-	cmp	r2, r0
+	ldi	r1, 4
+	ldi	r2, 2
+	cmp	r3, r2
 	beq	__LBB1_38
 # %bb.37:                               # %if.else34
-	movens	r2, r3
+	movens	r3, r1
 __LBB1_38:                              # %if.else34
-	ldi	r0, 7
-	cmp	r1, r0
+	ldi	r2, 7
+	cmp	r0, r2
 	beq	__LBB1_40
 # %bb.39:                               # %if.else34
-	movens	r2, r3
+	movens	r3, r1
 __LBB1_40:                              # %if.else34
-	lsw	r0, -10                         # 2-byte Folded Reload
-	shl	r0, r0, 1
-	lsw	r2, -8                          # 2-byte Folded Reload
+	lsw	r2, -14                         # 2-byte Folded Reload
+	shl	r2, r2, 1
+	lsw	r3, -8                          # 2-byte Folded Reload
+	add r2, r3, r2
+	shl	r2, r2, 1
+	shl	r0, r0, 4
 	add r0, r2, r0
-	shl	r0, r0, 1
-	shl	r1, r1, 4
-	add r1, r0, r0
-	ldi	r1, state_matrix
-	stw	r0, r1, r3
-	ldi	r1, index_to_cell.cell_map
-	ldw	r0, r1, r0
-	ldi	r1, -2
-	and r0, r1, r0
-	ldi	r1, -128
-	stw	r0, r1, r3
-__LBB1_41:                              # %cleanup45
-	movens	r5, r0
+	stw	r0, r4, r1
+	ldi	r2, index_to_cell.cell_map
+	ldw	r0, r2, r0
+	and r0, r5, r0
+	ldi	r2, -128
+	stw	r0, r2, r1
+__LBB1_41:                              # %cleanup44
+	movens	r6, r0
 	lsw	r6, -6                          # 2-byte Folded Reload
 	lsw	r5, -4                          # 2-byte Folded Reload
 	lsw	r4, -2                          # 2-byte Folded Reload
-	addsp	12
+	addsp	14
 	pop	fp
 	rts
                                         # -- End function

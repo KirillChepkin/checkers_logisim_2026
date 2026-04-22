@@ -267,32 +267,48 @@ static inline void input_direction() {
 static inline int try_move_take_damka_white(int row, int column, int direction) {
     int d_row = delta_row[direction], d_column = delta_column[direction];
     int cnt = 0, tek_row = row, tek_column = column;
-    
     while (1) {
         cnt++;
         tek_row += d_row;
         tek_column += d_column;
-        if (tek_row < 1 || tek_row > 6 || tek_column < 1 || tek_column > 6) return 0;
-        
+        if (tek_row < 1 || tek_row > 6 || tek_column < 1 || tek_column > 6) {
+            return 0;
+        }
         int tek_state = state_matrix[tek_row][tek_column];
-        if (tek_state == WHITE_CHECKER || tek_state == WHITE_KING) return 0;
-        if (tek_state == BLACK_CHECKER || tek_state == BLACK_KING) return cnt + 1;
+        if (tek_state == WHITE_CHECKER || tek_state == WHITE_KING) {
+            return 0;
+        }
+        if (tek_state == BLACK_CHECKER || tek_state == BLACK_KING) {
+            if (state_matrix[tek_row + d_row][tek_column + d_column] == EMPTY_BLACK_SQUARE) {
+                return cnt + 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
 
 static inline int try_move_take_damka_black(int row, int column, int direction) {
     int d_row = delta_row[direction], d_column = delta_column[direction];
     int cnt = 0, tek_row = row, tek_column = column;
-    
     while (1) {
         cnt++;
         tek_row += d_row;
         tek_column += d_column;
-        if (tek_row < 1 || tek_row > 6 || tek_column < 1 || tek_column > 6) return 0;
-        
+        if (tek_row < 1 || tek_row > 6 || tek_column < 1 || tek_column > 6) {
+            return 0;
+        }
         int tek_state = state_matrix[tek_row][tek_column];
-        if (tek_state == BLACK_CHECKER || tek_state == BLACK_KING) return 0;
-        if (tek_state == WHITE_CHECKER || tek_state == WHITE_KING) return cnt + 1;
+        if (tek_state == BLACK_CHECKER || tek_state == BLACK_KING) {
+            return 0;
+        }
+        if (tek_state == WHITE_CHECKER || tek_state == WHITE_KING) {
+            if (state_matrix[tek_row + d_row][tek_column + d_column] == EMPTY_BLACK_SQUARE) {
+                return cnt + 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
 

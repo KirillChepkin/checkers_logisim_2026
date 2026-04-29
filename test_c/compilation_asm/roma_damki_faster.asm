@@ -1,5 +1,5 @@
 ### SECTION: .text
-rsect _roma_damki_faster_c_1804289383
+rsect _roma_damki_faster_c_16807
 
 
 

@@ -112,9 +112,17 @@ static inline void input_loop() {
 
 int main_func() {
     // функция, которая будет работать в качестве main
-    set_status(2);
+    /* set_status(2);
     set_select(2, 1);
     init_board();
-    input_loop();
+    input_loop(); */
+    int g;
+    while (1) {
+        g = gp_address[0];
+        if (g != 0) {
+            set_status(g);
+            do_nothing();
+        }
+    }
     return 0;
 }

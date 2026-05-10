@@ -3,8 +3,6 @@ dc main, 0
 align 0x80
 
 
-ldi r2, 0xfffa
-ldi r0, 0xfffe
 main:
     ldi r2, 0xfffa
     ldi r0, 0xfffe

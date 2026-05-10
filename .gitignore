@@ -4,4 +4,4 @@ try_extra_button/clang
 try_parsing_in_files/clang
 c_code/clang
 circuits/control_device_copy.circ
-/test_code_asm/
+asm_code/

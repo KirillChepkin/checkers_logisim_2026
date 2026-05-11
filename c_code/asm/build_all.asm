@@ -1,5 +1,5 @@
 ### SECTION: .text
-rsect _build_all_c_1804289383
+rsect _build_all_c_16807
 
 
 
@@ -191,54 +191,54 @@ init_board>                             # -- Begin function init_board
 # %bb.0:                                # %entry
 	ldi	r0, cb_address
 	ldw	r0, r0
-	ldi	r2, 10
 	ldi	r1, 1
-	stw	r0, r2, r1
+	stw	r0, r1
 	ldi	r2, 8
 	stw	r0, r2, r1
-	ldi	r2, 26
+	ldi	r2, 10
 	stw	r0, r2, r1
-	ldi	r2, 24
-	stw	r0, r2, r1
-	ldi	r2, 16
-	stw	r0, r2, r1
-	ldi	r3, 14
+	ldi	r3, 4
 	ldi	r2, 2
 	stw	r0, r3, r2
 	ldi	r3, 6
 	stw	r0, r3, r2
-	ldi	r3, 4
+	ldi	r3, 14
 	stw	r0, r3, r2
-	ldi	r3, 42
+	ldi	r3, 16
 	stw	r0, r3, r1
-	ldi	r3, 40
+	ldi	r3, 24
 	stw	r0, r3, r1
-	ldi	r3, 32
+	ldi	r3, 26
 	stw	r0, r3, r1
-	ldi	r3, 30
+	ldi	r3, 20
 	stw	r0, r3, r2
 	ldi	r3, 22
 	stw	r0, r3, r2
-	ldi	r3, 20
+	ldi	r3, 30
 	stw	r0, r3, r2
-	ldi	r3, 58
+	ldi	r3, 32
 	stw	r0, r3, r1
-	ldi	r3, 56
+	ldi	r3, 40
 	stw	r0, r3, r1
-	ldi	r3, 48
+	ldi	r3, 42
 	stw	r0, r3, r1
-	ldi	r3, 46
+	ldi	r3, 36
 	stw	r0, r3, r2
 	ldi	r3, 38
 	stw	r0, r3, r2
-	ldi	r3, 36
+	ldi	r3, 46
 	stw	r0, r3, r2
-	stw	r0, r1
-	ldi	r1, 62
+	ldi	r3, 48
+	stw	r0, r3, r1
+	ldi	r3, 56
+	stw	r0, r3, r1
+	ldi	r3, 58
+	stw	r0, r3, r1
+	ldi	r1, 52
 	stw	r0, r1, r2
 	ldi	r1, 54
 	stw	r0, r1, r2
-	ldi	r1, 52
+	ldi	r1, 62
 	stw	r0, r1, r2
 	rts
                                         # -- End function
@@ -2540,7 +2540,7 @@ handle_short_move>                      # -- Begin function handle_short_move
 # %bb.0:                                # %entry
 	push	fp
 	ldsp	fp
-	addsp	-24
+	addsp	-22
 	ssw	r4, -2                          # 2-byte Folded Spill
 	ssw	r5, -4                          # 2-byte Folded Spill
 	ssw	r6, -6                          # 2-byte Folded Spill
@@ -2610,7 +2610,7 @@ __LBB17_3:                              # %if.then
 	ldw	r0, r1
 	add	r1, 1
 	stw	r0, r1
-	br	__LBB17_33
+	br	__LBB17_35
 __LBB17_4:                              # %if.else
 	ldi	r2, 4
 	ldi	r3, 7
@@ -2619,8 +2619,8 @@ __LBB17_4:                              # %if.else
 # %bb.5:                                # %if.else
 	movens	r5, r2
 __LBB17_6:                              # %if.else
-	ldi	r4, 2
-	cmp	r5, r4
+	ldi	r3, 2
+	cmp	r5, r3
 	beq	__LBB17_8
 # %bb.7:                                # %if.else
 	movens	r5, r2
@@ -2628,14 +2628,14 @@ __LBB17_8:                              # %if.else
 	shl	r1, r3, 1
 	shl	r0, r5, 4
 	add r5, r3, r3
-	ldi	r5, state_matrix
-	stw	r3, r5, r2
-	ldi	r5, index_to_cell.cell_map
-	ldw	r3, r5, r3
-	ldi	r5, -2
-	and r3, r5, r3
-	lsw	r5, -16                         # 2-byte Folded Reload
-	stw	r5, r3, r2
+	ldi	r4, state_matrix
+	stw	r3, r4, r2
+	ldi	r4, index_to_cell.cell_map
+	ldw	r3, r4, r3
+	ldi	r4, -2
+	and r3, r4, r3
+	lsw	r4, -16                         # 2-byte Folded Reload
+	stw	r4, r3, r2
 	ldi	r2, chosen_col
 	stw	r2, r1
 	ldi	r2, chosen_row
@@ -2652,172 +2652,195 @@ __LBB17_8:                              # %if.else
 	ldi	r0, chosen_direction
 	ldw	r0, r0
 	ssw	r0, -20                         # 2-byte Folded Spill
-	ldi	r0, gp_address
-	ldi	r1, gs_address
+	ldi	r0, gs_address
+	ldi	r1, gp_address
 	ldi	r5, 6
 __LBB17_9:                              # %while.body.lr.ph.outer
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB17_10 Depth 2
                                         #       Child Loop BB17_11 Depth 3
-                                        #         Child Loop BB17_13 Depth 4
-                                        #       Child Loop BB17_21 Depth 3
-                                        #       Child Loop BB17_23 Depth 3
-                                        #       Child Loop BB17_27 Depth 3
+                                        #         Child Loop BB17_12 Depth 4
+                                        #           Child Loop BB17_14 Depth 5
+                                        #         Child Loop BB17_23 Depth 4
+                                        #         Child Loop BB17_25 Depth 4
                                         #       Child Loop BB17_29 Depth 3
+                                        #       Child Loop BB17_31 Depth 3
 	ldw	r0, r0
-	ssw	r0, -16                         # 2-byte Folded Spill
-	ldw	r1, r0
 	ssw	r0, -18                         # 2-byte Folded Spill
-__LBB17_10:                             # %while.body
+	ldi	r3, 1
+__LBB17_10:                             # %while.body.lr.ph
                                         #   Parent Loop BB17_9 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB17_11 Depth 3
-                                        #         Child Loop BB17_13 Depth 4
-                                        #       Child Loop BB17_21 Depth 3
-                                        #       Child Loop BB17_23 Depth 3
-                                        #       Child Loop BB17_27 Depth 3
+                                        #         Child Loop BB17_12 Depth 4
+                                        #           Child Loop BB17_14 Depth 5
+                                        #         Child Loop BB17_23 Depth 4
+                                        #         Child Loop BB17_25 Depth 4
                                         #       Child Loop BB17_29 Depth 3
-	lsw	r0, -18                         # 2-byte Folded Reload
-	ldi	r1, 3
-	stw	r0, r1
-__LBB17_11:                             # %while.body.i
+                                        #       Child Loop BB17_31 Depth 3
+	ldw	r1, r0
+	ssw	r0, -16                         # 2-byte Folded Spill
+__LBB17_11:                             # %while.body
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
                                         # =>    This Loop Header: Depth=3
-                                        #         Child Loop BB17_13 Depth 4
-	lsw	r0, -16                         # 2-byte Folded Reload
-	ldw	r0, r1
-	ldi	r2, 1
-	and r1, r2, r0
-	cmp	r0, r6
-	movens	r2, r0
-	bne	__LBB17_17
-	br	__LBB17_12
-__LBB17_12:                             # %if.end.i.i.preheader
-                                        #   in Loop: Header=BB17_11 Depth=3
-	ldi	r0, 1
-__LBB17_13:                             # %if.end.i.i
+                                        #         Child Loop BB17_12 Depth 4
+                                        #           Child Loop BB17_14 Depth 5
+                                        #         Child Loop BB17_23 Depth 4
+                                        #         Child Loop BB17_25 Depth 4
+	ldi	r0, 3
+	lsw	r1, -18                         # 2-byte Folded Reload
+	stw	r1, r0
+__LBB17_12:                             # %while.body.i
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
                                         #       Parent Loop BB17_11 Depth=3
-                                        # =>      This Inner Loop Header: Depth=4
-	movens	r0, r2
-	add	r0, 1
-	cmp	r2, r5
-	bhi	__LBB17_15
-	br	__LBB17_14
+                                        # =>      This Loop Header: Depth=4
+                                        #           Child Loop BB17_14 Depth 5
+	lsw	r0, -16                         # 2-byte Folded Reload
+	ldw	r0, r2
+	and r2, r3, r1
+	cmp	r1, r6
+	movens	r3, r1
+	bne	__LBB17_19
+	br	__LBB17_13
+__LBB17_13:                             # %if.end.i.i.preheader
+                                        #   in Loop: Header=BB17_12 Depth=4
+	movens	r3, r1
+	ldi	r4, 2
 __LBB17_14:                             # %if.end.i.i
-                                        #   in Loop: Header=BB17_13 Depth=4
-	and r1, r4, r3
-	shra	r1, r1, 1
-	cmp	r3, r6
-	beq	__LBB17_13
+                                        #   Parent Loop BB17_9 Depth=1
+                                        #     Parent Loop BB17_10 Depth=2
+                                        #       Parent Loop BB17_11 Depth=3
+                                        #         Parent Loop BB17_12 Depth=4
+                                        # =>        This Inner Loop Header: Depth=5
+	movens	r1, r3
+	add	r1, 1
+	cmp	r3, r5
+	bhi	__LBB17_16
 	br	__LBB17_15
-__LBB17_15:                             # %cleanup.loopexit.i.i
-                                        #   in Loop: Header=BB17_11 Depth=3
-	ldi	r1, 7
-	cmp	r2, r1
-	blo	__LBB17_17
-# %bb.16:                               # %cleanup.loopexit.i.i
-                                        #   in Loop: Header=BB17_11 Depth=3
-	movens	r6, r0
-__LBB17_17:                             # %read_gamepad.exit.i
-                                        #   in Loop: Header=BB17_11 Depth=3
-	ldi	r3, seed
-	ldw	r3, r1
-	ldi	r2, -28051
-	add r1, r2, r1
-	stw	r3, r1
-	ldi	r1, 3
-	cmp	r0, r1
-	blo	__LBB17_11
-	br	__LBB17_18
-__LBB17_18:                             # %input_direction.exit
-                                        #   in Loop: Header=BB17_10 Depth=2
-	ldi	r1, chosen_direction
-	stw	r1, r0
-	ldi	r1, 7
-	cmp	r0, r1
-	beq	__LBB17_33
-	br	__LBB17_19
-__LBB17_19:                             # %if.end
-                                        #   in Loop: Header=BB17_10 Depth=2
-	lsw	r1, -20                         # 2-byte Folded Reload
-	cmp	r0, r1
-	beq	__LBB17_25
+__LBB17_15:                             # %if.end.i.i
+                                        #   in Loop: Header=BB17_14 Depth=5
+	and r2, r4, r0
+	shra	r2, r2, 1
+	cmp	r0, r6
+	beq	__LBB17_14
+	br	__LBB17_16
+__LBB17_16:                             # %cleanup.loopexit.i.i
+                                        #   in Loop: Header=BB17_12 Depth=4
+	ldi	r0, 7
+	cmp	r3, r0
+	blo	__LBB17_18
+# %bb.17:                               # %cleanup.loopexit.i.i
+                                        #   in Loop: Header=BB17_12 Depth=4
+	movens	r6, r1
+__LBB17_18:                             # %cleanup.loopexit.i.i
+                                        #   in Loop: Header=BB17_12 Depth=4
+	ldi	r3, 1
+__LBB17_19:                             # %read_gamepad.exit.i
+                                        #   in Loop: Header=BB17_12 Depth=4
+	ldi	r0, seed
+	movens	r0, r2
+	ldw	r2, r0
+	movens	r6, r4
+	movens	r3, r6
+	ldi	r3, -28051
+	add r0, r3, r0
+	movens	r6, r3
+	movens	r4, r6
+	stw	r2, r0
+	ldi	r0, 3
+	cmp	r1, r0
+	blo	__LBB17_12
 	br	__LBB17_20
-__LBB17_20:                             # %if.then6
-                                        #   in Loop: Header=BB17_10 Depth=2
-	lsw	r0, -18                         # 2-byte Folded Reload
-	ldi	r1, 1
+__LBB17_20:                             # %input_direction.exit
+                                        #   in Loop: Header=BB17_11 Depth=3
+	ldi	r0, chosen_direction
 	stw	r0, r1
+	ldi	r0, 7
+	cmp	r1, r0
+	ldi	r4, 2
+	beq	__LBB17_35
+	br	__LBB17_21
+__LBB17_21:                             # %if.end
+                                        #   in Loop: Header=BB17_11 Depth=3
+	lsw	r0, -20                         # 2-byte Folded Reload
+	cmp	r1, r0
+	beq	__LBB17_27
+	br	__LBB17_22
+__LBB17_22:                             # %if.then6
+                                        #   in Loop: Header=BB17_11 Depth=3
+	lsw	r0, -18                         # 2-byte Folded Reload
+	stw	r0, r3
 	ssw	r6, -14
 	lsw	r0, -14
 	ldi	r1, 49
 	cmp	r0, r1
 	ldi	r2, 50
-	bgt	__LBB17_22
-	br	__LBB17_21
-__LBB17_21:                             # %for.inc.i.i
+	bgt	__LBB17_24
+	br	__LBB17_23
+__LBB17_23:                             # %for.inc.i.i
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
-                                        # =>    This Inner Loop Header: Depth=3
+                                        #       Parent Loop BB17_11 Depth=3
+                                        # =>      This Inner Loop Header: Depth=4
 	lsw	r0, -14
 	add	r0, 1
 	ssw	r0, -14
 	lsw	r0, -14
 	cmp	r0, r2
-	blt	__LBB17_21
-	br	__LBB17_22
-__LBB17_22:                             # %set_status.exit
-                                        #   in Loop: Header=BB17_10 Depth=2
+	blt	__LBB17_23
+	br	__LBB17_24
+__LBB17_24:                             # %set_status.exit
+                                        #   in Loop: Header=BB17_11 Depth=3
 	ssw	r6, -12
 	lsw	r0, -12
 	ldi	r1, 49
 	cmp	r0, r1
-	bgt	__LBB17_24
-	br	__LBB17_23
-__LBB17_23:                             # %for.inc.i
+	bgt	__LBB17_26
+	br	__LBB17_25
+__LBB17_25:                             # %for.inc.i
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
-                                        # =>    This Inner Loop Header: Depth=3
+                                        #       Parent Loop BB17_11 Depth=3
+                                        # =>      This Inner Loop Header: Depth=4
 	lsw	r0, -12
 	add	r0, 1
 	ssw	r0, -12
 	lsw	r0, -12
 	cmp	r0, r2
-	blt	__LBB17_23
-	br	__LBB17_24
-__LBB17_24:                             # %busy_wait.exit
-                                        #   in Loop: Header=BB17_10 Depth=2
-	br	__LBB17_10
-__LBB17_25:                             # %if.end7
+	blt	__LBB17_25
+	br	__LBB17_26
+__LBB17_26:                             # %busy_wait.exit
+                                        #   in Loop: Header=BB17_11 Depth=3
+	br	__LBB17_11
+__LBB17_27:                             # %if.end7
                                         #   in Loop: Header=BB17_10 Depth=2
 	ldi	r0, chosen_col
 	ldw	r0, r1
 	ldi	r0, chosen_row
 	ldw	r0, r0
-	ssw	r0, -24                         # 2-byte Folded Spill
-	ssw	r1, -22                         # 2-byte Folded Spill
+	ssw	r0, -22                         # 2-byte Folded Spill
+	ssw	r1, -16                         # 2-byte Folded Spill
 	lsw	r2, -20                         # 2-byte Folded Reload
 	jsr	try_move
 	movens	r0, r3
 	cmp	r3, r6
-	bne	__LBB17_31
-	br	__LBB17_26
-__LBB17_26:                             # %if.then9
+	bne	__LBB17_33
+	br	__LBB17_28
+__LBB17_28:                             # %if.then9
                                         #   in Loop: Header=BB17_10 Depth=2
-	ldi	r2, 1
+	ldi	r3, 1
 	lsw	r0, -18                         # 2-byte Folded Reload
-	stw	r0, r2
+	stw	r0, r3
 	ssw	r6, -10
 	lsw	r0, -10
 	ldi	r1, 49
 	cmp	r0, r1
 	ldi	r2, 50
-	bgt	__LBB17_28
-	br	__LBB17_27
-__LBB17_27:                             # %for.inc.i.i56
+	bgt	__LBB17_30
+	br	__LBB17_29
+__LBB17_29:                             # %for.inc.i.i56
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
@@ -2826,17 +2849,18 @@ __LBB17_27:                             # %for.inc.i.i56
 	ssw	r0, -10
 	lsw	r0, -10
 	cmp	r0, r2
-	blt	__LBB17_27
-	br	__LBB17_28
-__LBB17_28:                             # %set_status.exit61
+	blt	__LBB17_29
+	br	__LBB17_30
+__LBB17_30:                             # %set_status.exit61
                                         #   in Loop: Header=BB17_10 Depth=2
 	ssw	r6, -8
 	lsw	r0, -8
 	ldi	r1, 49
 	cmp	r0, r1
-	bgt	__LBB17_30
-	br	__LBB17_29
-__LBB17_29:                             # %for.inc.i65
+	ldi	r1, gp_address
+	bgt	__LBB17_32
+	br	__LBB17_31
+__LBB17_31:                             # %for.inc.i65
                                         #   Parent Loop BB17_9 Depth=1
                                         #     Parent Loop BB17_10 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
@@ -2845,36 +2869,36 @@ __LBB17_29:                             # %for.inc.i65
 	ssw	r0, -8
 	lsw	r0, -8
 	cmp	r0, r2
-	blt	__LBB17_29
-	br	__LBB17_30
-__LBB17_30:                             # %busy_wait.exit70
+	blt	__LBB17_31
+	br	__LBB17_32
+__LBB17_32:                             # %busy_wait.exit70
                                         #   in Loop: Header=BB17_10 Depth=2
 	br	__LBB17_10
-__LBB17_31:                             # %if.end10
+__LBB17_33:                             # %if.end10
                                         #   in Loop: Header=BB17_9 Depth=1
-	lsw	r0, -24                         # 2-byte Folded Reload
-	lsw	r1, -22                         # 2-byte Folded Reload
+	lsw	r0, -22                         # 2-byte Folded Reload
+	lsw	r1, -16                         # 2-byte Folded Reload
 	lsw	r2, -20                         # 2-byte Folded Reload
 	ssw	r3, -16                         # 2-byte Folded Spill
 	lsw	r3, -16                         # 2-byte Folded Reload
 	jsr	execute_move
 	lsw	r0, -16                         # 2-byte Folded Reload
 	cmp	r0, r4
-	ldi	r0, gp_address
-	ldi	r1, gs_address
+	ldi	r0, gs_address
+	ldi	r1, gp_address
 	blt	__LBB17_9
-	br	__LBB17_32
-__LBB17_32:                             # %if.then15
+	br	__LBB17_34
+__LBB17_34:                             # %if.then15
 	ldi	r0, 0
 	ldi	r1, count_moves_no_takes
 	stw	r1, r0
 	lsw	r0, -20                         # 2-byte Folded Reload
 	jsr	taking_series_king
-__LBB17_33:                             # %if.end17
+__LBB17_35:                             # %if.end17
 	lsw	r6, -6                          # 2-byte Folded Reload
 	lsw	r5, -4                          # 2-byte Folded Reload
 	lsw	r4, -2                          # 2-byte Folded Reload
-	addsp	24
+	addsp	22
 	pop	fp
 	rts
                                         # -- End function
@@ -3539,53 +3563,53 @@ main_func>                              # -- Begin function main_func
 	stw	r0, r4
 	ldi	r0, cb_address
 	ldw	r0, r0
-	ldi	r1, 10
 	ldi	r2, 1
-	stw	r0, r1, r2
+	stw	r0, r2
 	ldi	r1, 8
 	stw	r0, r1, r2
-	ldi	r1, 26
+	ldi	r1, 10
 	stw	r0, r1, r2
-	ldi	r1, 24
-	stw	r0, r1, r2
-	ldi	r1, 16
-	stw	r0, r1, r2
-	ldi	r1, 14
+	ldi	r1, 4
 	stw	r0, r1, r6
 	ldi	r1, 6
 	stw	r0, r1, r6
-	ldi	r1, 4
+	ldi	r1, 14
 	stw	r0, r1, r6
-	ldi	r1, 42
+	ldi	r1, 16
 	stw	r0, r1, r2
-	ldi	r1, 40
+	ldi	r1, 24
 	stw	r0, r1, r2
-	ldi	r1, 32
+	ldi	r1, 26
 	stw	r0, r1, r2
-	ldi	r1, 30
+	ldi	r1, 20
 	stw	r0, r1, r6
 	ldi	r1, 22
 	stw	r0, r1, r6
-	ldi	r1, 20
+	ldi	r1, 30
 	stw	r0, r1, r6
-	ldi	r1, 58
+	ldi	r1, 32
 	stw	r0, r1, r2
-	ldi	r1, 56
+	ldi	r1, 40
 	stw	r0, r1, r2
-	ldi	r1, 48
+	ldi	r1, 42
 	stw	r0, r1, r2
-	ldi	r1, 46
+	ldi	r1, 36
 	stw	r0, r1, r6
 	ldi	r1, 38
 	stw	r0, r1, r6
-	ldi	r1, 36
+	ldi	r1, 46
 	stw	r0, r1, r6
-	stw	r0, r2
-	ldi	r1, 62
+	ldi	r1, 48
+	stw	r0, r1, r2
+	ldi	r1, 56
+	stw	r0, r1, r2
+	ldi	r1, 58
+	stw	r0, r1, r2
+	ldi	r1, 52
 	stw	r0, r1, r6
 	ldi	r1, 54
 	stw	r0, r1, r6
-	ldi	r1, 52
+	ldi	r1, 62
 	stw	r0, r1, r6
 	movens	r4, r0
 	jsr	check_game_over

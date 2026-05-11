@@ -5,3 +5,5 @@ try_parsing_in_files/clang
 c_code/clang
 circuits/control_device_copy.circ
 asm_code/
+.DS_Store
+DS_Store

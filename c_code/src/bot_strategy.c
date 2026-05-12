@@ -12,26 +12,41 @@ int ways_no_take_safe = 0;
 int x_safe[MAX_MOVES], y_safe[MAX_MOVES], dir_safe[MAX_MOVES];
 int ways_no_take_unsafe = 0;
 int x_unsafe[MAX_MOVES], y_unsafe[MAX_MOVES], dir_unsafe[MAX_MOVES];
+int ways_no_take_blunder = 0;
+int x_blunder[MAX_MOVES], y_blunder[MAX_MOVES], dir_blunder[MAX_MOVES];
 
-int is_safe_move(int row, int column, int direction) {
-    int piece = state_matrix[row][column];
-    int result = 1;
-    state_matrix[row][column] = EMPTY_BLACK_SQUARE;
+int level_safe_move(int row, int column, int direction) {
     int cur_row = row + delta_row[direction], cur_column = column + delta_column[direction];
-    state_matrix[cur_row][cur_column] = piece;
-    for (int dir = RIGHT_UP; dir <= LEFT_DOWN; dir++) {
-        int op_row = cur_row + delta_row[dir], op_column = cur_column + delta_column[dir];
-        if (op_row < 0 || op_row > 7 || op_column < 0 || op_column > 7) { continue; }
-        if (state_matrix[op_row][op_column] == WHITE_CHECKER || state_matrix[op_row][op_column] == WHITE_KING) {
-            if (try_move(op_row, op_column, 9 - dir) == 2) {
-                result = 0;
-                break;
+    int danger_row = row + delta_row[direction], danger_column = column - delta_column[direction];
+    if (cur_row >= 1 && cur_row < 7 && cur_column >= 1 && cur_column < 7) {
+        if (danger_row >= 1 && danger_row < 7 && danger_column >= 1 && danger_column < 7) {
+            if (state_matrix[danger_row][danger_column] == BLACK_CHECKER || state_matrix[danger_row][danger_column] == BLACK_KING) {
+                int i_row = danger_row + delta_row[direction], i_column = danger_column - delta_column[direction];
+                if (i_row >= 0 && i_row <= 7 && i_column >= 0 && i_column <= 7) {
+                    if (state_matrix[i_row][i_column] == WHITE_CHECKER || state_matrix[i_row][i_column] == WHITE_KING) {
+                        return 0;
+                    }
+                }
             }
         }
     }
-    state_matrix[cur_row][cur_column] = EMPTY_BLACK_SQUARE;
-    state_matrix[row][column] = piece;
-    return result;
+    if (cur_row >= 1 && cur_row < 7 && cur_column >= 1 && cur_column < 7) {
+        for (int dx = -1; dx <= 1; dx += 2) {
+            for (int dy = -1; dy <= 1; dy += 2) {
+                int piece1 = state_matrix[cur_row - dx][cur_column - dy];
+                if (cur_row - dx == row && cur_column - dy == column) {
+                    piece1 = EMPTY_BLACK_SQUARE;
+                }
+                if (piece1 == EMPTY_BLACK_SQUARE) {
+                    int piece = state_matrix[cur_row + dx][cur_column + dy];
+                    if (piece == WHITE_CHECKER || piece == WHITE_KING) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 2;
 }
 
 int bot_first_move() {
@@ -51,16 +66,22 @@ int bot_first_move() {
                         dir_tc[ways_take_checker] = dir;
                         ways_take_checker++;
                     } else if (resbot1 == 1) {
-                        if (is_safe_move(i, j, dir)) {
+                        int ress = level_safe_move(i, j, dir);
+                        if (ress == 2) {
                             x_safe[ways_no_take_safe] = i;
                             y_safe[ways_no_take_safe] = j;
                             dir_safe[ways_no_take_safe] = dir;
                             ways_no_take_safe++;
-                        } else {
+                        } else if (ress == 1) {
                             x_unsafe[ways_no_take_unsafe] = i;
                             y_unsafe[ways_no_take_unsafe] = j;
                             dir_unsafe[ways_no_take_unsafe] = dir;
                             ways_no_take_unsafe++;
+                        } else {
+                            x_blunder[ways_no_take_blunder] = i;
+                            y_blunder[ways_no_take_blunder] = j;
+                            dir_blunder[ways_no_take_blunder] = dir;
+                            ways_no_take_blunder++;
                         }
                     }
                 }
@@ -75,16 +96,22 @@ int bot_first_move() {
                         ways_take_king++;
                     } else {
                         if (try_move(i, j, dir)) {
-                            if (is_safe_move(i, j, dir)) {
+                            int ress = level_safe_move(i, j, dir);
+                            if (ress == 2) {
                                 x_safe[ways_no_take_safe] = i;
                                 y_safe[ways_no_take_safe] = j;
                                 dir_safe[ways_no_take_safe] = dir;
                                 ways_no_take_safe++;
-                            } else {
+                            } else if (ress == 1) {
                                 x_unsafe[ways_no_take_unsafe] = i;
                                 y_unsafe[ways_no_take_unsafe] = j;
                                 dir_unsafe[ways_no_take_unsafe] = dir;
                                 ways_no_take_unsafe++;
+                            } else {
+                                x_blunder[ways_no_take_blunder] = i;
+                                y_blunder[ways_no_take_blunder] = j;
+                                dir_blunder[ways_no_take_blunder] = dir;
+                                ways_no_take_blunder++;
                             }
                         }
                     }
@@ -104,9 +131,13 @@ int bot_first_move() {
         int ind = get_rand(ways_no_take_safe);
         execute_move(x_safe[ind], y_safe[ind], dir_safe[ind], 1);
         return 1;
-    } else {
+    } else if (ways_no_take_unsafe > 0) {
         int ind = get_rand(ways_no_take_unsafe);
         execute_move(x_unsafe[ind], y_unsafe[ind], dir_unsafe[ind], 1);
+        return 1;
+    } else {
+        int ind = get_rand(ways_no_take_blunder);
+        execute_move(x_blunder[ind], y_blunder[ind], dir_blunder[ind], 1);
         return 1;
     }
     return 1;

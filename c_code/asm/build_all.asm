@@ -1143,208 +1143,307 @@ __LBB13_9:                              # %while.end
 	pop	fp
 	rts
                                         # -- End function
-is_safe_move>                           # -- Begin function is_safe_move
+level_safe_move>                        # -- Begin function level_safe_move
 # %bb.0:                                # %entry
 	push	fp
 	ldsp	fp
-	addsp	-14
+	addsp	-18
 	ssw	r4, -2                          # 2-byte Folded Spill
 	ssw	r5, -4                          # 2-byte Folded Spill
 	ssw	r6, -6                          # 2-byte Folded Spill
-	shl	r1, r3, 1
-	shl	r0, r4, 4
-	add r4, r3, r3
-	ldi	r5, state_matrix
-	ldw	r3, r5, r6
-	ldi	r4, 0
-	stw	r3, r5, r4
+	ssw	r1, -8                          # 2-byte Folded Spill
 	shl	r2, r2, 1
-	ldi	r4, delta_row
-	ldw	r2, r4, r4
-	add r4, r0, r5
-	ldi	r0, delta_column
-	ldw	r2, r0, r0
-	add r0, r1, r2
-	shl	r2, r0, 1
-	shl	r5, r1, 4
-	add r1, r0, r0
-	ssw	r6, -10                         # 2-byte Folded Spill
-	ldi	r4, state_matrix
-	stw	r0, r4, r6
-	movens	r2, r6
-	add r3, r4, r1
-	ssw	r1, -12                         # 2-byte Folded Spill
-	add r0, r4, r0
-	ssw	r0, -14                         # 2-byte Folded Spill
-	ldi	r0, delta_row+6
-	ldw	r0, r0
-	ssw	r5, -8                          # 2-byte Folded Spill
-	add r0, r5, r0
-	ldi	r5, 7
-	cmp	r0, r5
-	bhi	__LBB14_5
-	br	__LBB14_1
-__LBB14_1:                              # %entry
-	ldi	r1, delta_column+6
-	ldw	r1, r1
-	add r1, r6, r1
+	ldi	r1, delta_row
+	ldw	r2, r1, r3
+	ldi	r1, delta_column
+	ldw	r2, r1, r2
+	ssw	r0, -12                         # 2-byte Folded Spill
+	ssw	r3, -16                         # 2-byte Folded Spill
+	add r3, r0, r6
+	movens	r6, r1
+	sub	r1, 1
+	ldi	r5, 0
+	ldi	r4, 1
+	ldi	r0, 6
+	ssw	r1, -14                         # 2-byte Folded Spill
+	cmp	r1, r0
+	movens	r4, r0
+	blo	__LBB14_2
+# %bb.1:                                # %entry
+	movens	r5, r0
+__LBB14_2:                              # %entry
+	lsw	r1, -8                          # 2-byte Folded Reload
+	add r2, r1, r1
+	ssw	r1, -10                         # 2-byte Folded Spill
+	cmp	r1, r5
+	movens	r4, r1
+	bgt	__LBB14_4
+# %bb.3:                                # %entry
+	movens	r5, r1
+__LBB14_4:                              # %entry
+	and r0, r1, r0
+	ldi	r3, 7
+	lsw	r1, -10                         # 2-byte Folded Reload
+	cmp	r1, r3
+	movens	r4, r1
+	blt	__LBB14_6
+# %bb.5:                                # %entry
+	movens	r5, r1
+__LBB14_6:                              # %entry
+	and r0, r1, r5
+	cmp	r5, r4
+	bne	__LBB14_14
+	br	__LBB14_7
+__LBB14_7:                              # %entry
+	lsw	r0, -8                          # 2-byte Folded Reload
+	sub r0, r2, r1
+	movens	r1, r0
+	sub	r0, 1
+	ldi	r4, 5
+	cmp	r0, r4
+	bhi	__LBB14_14
+	br	__LBB14_8
+__LBB14_8:                              # %if.then18
+	shl	r1, r0, 1
+	shl	r6, r4, 4
+	add r4, r0, r0
+	ldi	r3, state_matrix
+	ldw	r0, r3, r0
+	ldi	r4, 4
+	cmp	r0, r4
+	beq	__LBB14_10
+	br	__LBB14_9
+__LBB14_9:                              # %if.then18
+	ldi	r4, 2
+	cmp	r0, r4
+	bne	__LBB14_14
+	br	__LBB14_10
+__LBB14_10:                             # %if.then25
+	lsw	r0, -16                         # 2-byte Folded Reload
+	add r6, r0, r3
+	ldi	r0, 7
+	cmp	r3, r0
+	bhi	__LBB14_14
+	br	__LBB14_11
+__LBB14_11:                             # %if.then25
+	sub r1, r2, r1
 	ldi	r2, 0
 	cmp	r1, r2
-	blt	__LBB14_5
-	br	__LBB14_2
-__LBB14_2:                              # %entry
-	cmp	r1, r5
-	bgt	__LBB14_5
-	br	__LBB14_3
-__LBB14_3:                              # %if.end
-	shl	r1, r2, 1
-	shl	r0, r3, 4
-	add r3, r2, r2
-	ldi	r3, state_matrix
-	ldw	r2, r3, r2
-	ldi	r4, 2
-	or r2, r4, r2
-	ldi	r3, 3
-	cmp	r2, r3
-	beq	__LBB14_4
-	br	__LBB14_5
-__LBB14_4:                              # %if.then26
-	ldi	r2, 6
-	jsr	try_move
-	cmp	r0, r4
-	ldi	r4, 0
-	beq	__LBB14_21
-	br	__LBB14_5
-__LBB14_5:                              # %for.inc
-	ldi	r0, delta_row+8
-	ldw	r0, r0
-	lsw	r1, -8                          # 2-byte Folded Reload
-	add r0, r1, r0
-	cmp	r0, r5
-	bhi	__LBB14_10
-	br	__LBB14_6
-__LBB14_6:                              # %for.inc
-	ldi	r1, delta_column+8
-	ldw	r1, r1
-	add r1, r6, r1
-	ldi	r4, 0
-	cmp	r1, r4
-	blt	__LBB14_10
-	br	__LBB14_7
-__LBB14_7:                              # %for.inc
-	cmp	r1, r5
-	bgt	__LBB14_10
-	br	__LBB14_8
-__LBB14_8:                              # %if.end.1
-	shl	r1, r2, 1
-	shl	r0, r3, 4
-	add r3, r2, r2
-	ldi	r3, state_matrix
-	ldw	r2, r3, r2
-	ldi	r3, 2
-	or r2, r3, r2
-	ldi	r3, 3
-	cmp	r2, r3
-	beq	__LBB14_9
-	br	__LBB14_10
-__LBB14_9:                              # %if.then26.1
-	ldi	r2, 5
-	jsr	try_move
-	ldi	r1, 2
-	cmp	r0, r1
-	beq	__LBB14_21
-	br	__LBB14_10
-__LBB14_10:                             # %for.inc.1
-	ldi	r0, delta_row+10
-	ldw	r0, r0
-	lsw	r1, -8                          # 2-byte Folded Reload
-	add r0, r1, r0
-	cmp	r0, r5
-	bhi	__LBB14_15
-	br	__LBB14_11
-__LBB14_11:                             # %for.inc.1
-	ldi	r1, delta_column+10
-	ldw	r1, r1
-	add r1, r6, r1
-	ldi	r4, 0
-	cmp	r1, r4
-	blt	__LBB14_15
+	blt	__LBB14_14
 	br	__LBB14_12
-__LBB14_12:                             # %for.inc.1
-	cmp	r1, r5
-	bgt	__LBB14_15
+__LBB14_12:                             # %if.then25
+	cmp	r1, r0
+	bgt	__LBB14_14
 	br	__LBB14_13
-__LBB14_13:                             # %if.end.2
-	shl	r1, r2, 1
-	shl	r0, r3, 4
-	add r3, r2, r2
-	ldi	r3, state_matrix
-	ldw	r2, r3, r2
-	ldi	r3, 2
-	or r2, r3, r2
-	ldi	r3, 3
-	cmp	r2, r3
-	beq	__LBB14_14
-	br	__LBB14_15
-__LBB14_14:                             # %if.then26.2
-	ldi	r2, 4
-	jsr	try_move
+__LBB14_13:                             # %if.then37
+	shl	r1, r0, 1
+	shl	r3, r1, 4
+	add r1, r0, r0
+	ldi	r1, state_matrix
+	ldw	r0, r1, r0
 	ldi	r1, 2
+	or r0, r1, r0
+	ldi	r1, 3
 	cmp	r0, r1
-	beq	__LBB14_21
-	br	__LBB14_15
-__LBB14_15:                             # %for.inc.2
-	ldi	r0, delta_row+12
-	ldw	r0, r0
-	lsw	r1, -8                          # 2-byte Folded Reload
-	add r0, r1, r0
-	cmp	r0, r5
-	bhi	__LBB14_20
-	br	__LBB14_16
-__LBB14_16:                             # %for.inc.2
-	ldi	r1, delta_column+12
-	ldw	r1, r1
-	add r1, r6, r1
-	ldi	r4, 0
-	cmp	r1, r4
-	blt	__LBB14_20
-	br	__LBB14_17
-__LBB14_17:                             # %for.inc.2
-	cmp	r1, r5
-	bgt	__LBB14_20
-	br	__LBB14_18
-__LBB14_18:                             # %if.end.3
-	shl	r1, r2, 1
-	shl	r0, r3, 4
-	add r3, r2, r2
-	ldi	r3, state_matrix
-	ldw	r2, r3, r2
-	ldi	r5, 2
-	or r2, r5, r2
-	ldi	r3, 3
-	cmp	r2, r3
-	beq	__LBB14_19
-	br	__LBB14_20
-__LBB14_19:                             # %if.then26.3
-	ldi	r2, 3
-	jsr	try_move
-	cmp	r0, r5
-	beq	__LBB14_21
-	br	__LBB14_20
-__LBB14_20:                             # %for.inc.3
-	ldi	r4, 1
-__LBB14_21:                             # %cleanup32
+	beq	__LBB14_44
+	br	__LBB14_14
+__LBB14_14:                             # %if.end50
+	ldi	r2, 2
 	ldi	r0, 0
-	lsw	r1, -14                         # 2-byte Folded Reload
-	stw	r1, r0
+	cmp	r5, r0
+	beq	__LBB14_44
+	br	__LBB14_15
+__LBB14_15:                             # %for.cond60.preheader.preheader
+	lsw	r3, -10                         # 2-byte Folded Reload
+	add	r3, 1
+	ldi	r1, 1
+	lsw	r2, -8                          # 2-byte Folded Reload
+	cmp	r3, r2
+	movens	r1, r2
+	beq	__LBB14_17
+# %bb.16:                               # %for.cond60.preheader.preheader
+	movens	r0, r2
+__LBB14_17:                             # %for.cond60.preheader.preheader
+	add	r6, 1
+	lsw	r4, -12                         # 2-byte Folded Reload
+	cmp	r6, r4
+	beq	__LBB14_19
+# %bb.18:                               # %for.cond60.preheader.preheader
+	movens	r0, r1
+__LBB14_19:                             # %for.cond60.preheader.preheader
+	and r1, r2, r0
+	shl	r3, r1, 1
+	ssw	r1, -18                         # 2-byte Folded Spill
+	shl	r6, r1, 4
+	ssw	r1, -16                         # 2-byte Folded Spill
+	tst	r0
+	bne	__LBB14_21
+	br	__LBB14_20
+__LBB14_20:                             # %for.cond60.preheader.preheader
+	lsw	r0, -16                         # 2-byte Folded Reload
+	lsw	r1, -18                         # 2-byte Folded Reload
+	add r0, r1, r0
+	ldi	r1, state_matrix
+	ldw	r0, r1, r0
+	ldi	r1, 0
+	cmp	r0, r1
+	bne	__LBB14_22
+	br	__LBB14_21
+__LBB14_21:                             # %cleanup90
+	lsw	r0, -14                         # 2-byte Folded Reload
+	shl	r0, r0, 4
+	lsw	r1, -10                         # 2-byte Folded Reload
+	shl	r1, r1, 1
+	add r1, r0, r0
+	ldi	r1, state_matrix-2
+	ldw	r0, r1, r0
+	ldi	r1, -3
+	and r0, r1, r0
+	ldi	r2, 1
+	cmp	r0, r2
+	beq	__LBB14_44
+	br	__LBB14_22
+__LBB14_22:                             # %for.inc
+	ldi	r1, 0
+	ldi	r0, 1
+	lsw	r2, -12                         # 2-byte Folded Reload
+	cmp	r6, r2
+	movens	r0, r2
+	beq	__LBB14_24
+# %bb.23:                               # %for.inc
+	movens	r1, r2
+__LBB14_24:                             # %for.inc
+	lsw	r5, -10                         # 2-byte Folded Reload
+	sub	r5, 1
+	lsw	r4, -8                          # 2-byte Folded Reload
+	cmp	r5, r4
+	beq	__LBB14_26
+# %bb.25:                               # %for.inc
+	movens	r1, r0
+__LBB14_26:                             # %for.inc
+	and r2, r0, r0
+	shl	r5, r6, 1
+	tst	r0
+	bne	__LBB14_28
+	br	__LBB14_27
+__LBB14_27:                             # %for.inc
+	lsw	r0, -16                         # 2-byte Folded Reload
+	add r0, r6, r0
+	ldi	r1, state_matrix
+	ldw	r0, r1, r0
+	ldi	r1, 0
+	cmp	r0, r1
+	bne	__LBB14_29
+	br	__LBB14_28
+__LBB14_28:                             # %cleanup90.1
+	lsw	r0, -14                         # 2-byte Folded Reload
+	shl	r0, r0, 4
+	lsw	r1, -10                         # 2-byte Folded Reload
+	shl	r1, r1, 1
+	add r1, r0, r0
+	ldi	r1, state_matrix+2
+	ldw	r0, r1, r0
+	ldi	r1, -3
+	and r0, r1, r0
+	ldi	r2, 1
+	cmp	r0, r2
+	beq	__LBB14_44
+	br	__LBB14_29
+__LBB14_29:                             # %for.inc.1
+	ldi	r1, 0
+	ldi	r0, 1
+	lsw	r2, -8                          # 2-byte Folded Reload
+	cmp	r3, r2
+	movens	r0, r2
+	beq	__LBB14_31
+# %bb.30:                               # %for.inc.1
+	movens	r1, r2
+__LBB14_31:                             # %for.inc.1
+	lsw	r3, -12                         # 2-byte Folded Reload
+	lsw	r4, -14                         # 2-byte Folded Reload
+	cmp	r4, r3
+	beq	__LBB14_33
+# %bb.32:                               # %for.inc.1
+	movens	r1, r0
+__LBB14_33:                             # %for.inc.1
+	and r0, r2, r1
+	lsw	r0, -14                         # 2-byte Folded Reload
+	shl	r0, r0, 4
+	tst	r1
+	bne	__LBB14_35
+	br	__LBB14_34
+__LBB14_34:                             # %for.inc.1
+	lsw	r1, -18                         # 2-byte Folded Reload
+	add r0, r1, r1
+	ldi	r2, state_matrix
+	ldw	r1, r2, r1
+	ldi	r2, 0
+	cmp	r1, r2
+	bne	__LBB14_36
+	br	__LBB14_35
+__LBB14_35:                             # %cleanup90.1196
+	lsw	r1, -10                         # 2-byte Folded Reload
+	shl	r1, r1, 1
+	lsw	r2, -16                         # 2-byte Folded Reload
+	add r1, r2, r1
+	ldi	r2, state_matrix-2
+	ldw	r1, r2, r1
+	ldi	r2, -3
+	and r1, r2, r1
+	ldi	r2, 1
+	cmp	r1, r2
+	beq	__LBB14_44
+	br	__LBB14_36
+__LBB14_36:                             # %for.inc.1198
+	ldi	r2, 0
+	ldi	r1, 1
+	lsw	r3, -8                          # 2-byte Folded Reload
+	cmp	r5, r3
+	movens	r1, r3
+	beq	__LBB14_38
+# %bb.37:                               # %for.inc.1198
+	movens	r2, r3
+__LBB14_38:                             # %for.inc.1198
+	lsw	r4, -12                         # 2-byte Folded Reload
+	lsw	r5, -14                         # 2-byte Folded Reload
+	cmp	r5, r4
+	beq	__LBB14_40
+# %bb.39:                               # %for.inc.1198
+	movens	r2, r1
+__LBB14_40:                             # %for.inc.1198
+	and r1, r3, r1
+	tst	r1
+	bne	__LBB14_42
+	br	__LBB14_41
+__LBB14_41:                             # %for.inc.1198
+	add r0, r6, r0
+	ldi	r1, state_matrix
+	ldw	r0, r1, r0
+	ldi	r1, 0
+	cmp	r0, r1
+	ldi	r2, 2
+	bne	__LBB14_44
+	br	__LBB14_42
+__LBB14_42:                             # %cleanup90.1.1
 	lsw	r0, -10                         # 2-byte Folded Reload
-	lsw	r1, -12                         # 2-byte Folded Reload
-	stw	r1, r0
-	movens	r4, r0
+	shl	r0, r0, 1
+	lsw	r1, -16                         # 2-byte Folded Reload
+	add r0, r1, r0
+	ldi	r1, state_matrix+2
+	ldw	r0, r1, r0
+	ldi	r1, -3
+	and r0, r1, r0
+	ldi	r2, 1
+	cmp	r0, r2
+	beq	__LBB14_44
+# %bb.43:                               # %cleanup90.1.1
+	ldi	r2, 2
+__LBB14_44:                             # %cleanup102
+	movens	r2, r0
 	lsw	r6, -6                          # 2-byte Folded Reload
 	lsw	r5, -4                          # 2-byte Folded Reload
 	lsw	r4, -2                          # 2-byte Folded Reload
-	addsp	14
+	addsp	18
 	pop	fp
 	rts
                                         # -- End function
@@ -1352,7 +1451,7 @@ bot_first_move>                         # -- Begin function bot_first_move
 # %bb.0:                                # %entry
 	push	fp
 	ldsp	fp
-	addsp	-12
+	addsp	-18
 	ssw	r4, -2                          # 2-byte Folded Spill
 	ssw	r5, -4                          # 2-byte Folded Spill
 	ssw	r6, -6                          # 2-byte Folded Spill
@@ -1365,88 +1464,90 @@ bot_first_move>                         # -- Begin function bot_first_move
 	stw	r0, r5
 	ldi	r0, ways_no_take_unsafe
 	stw	r0, r5
-	ldi	r4, 1
-	ldi	r3, 2
+	ldi	r0, ways_no_take_blunder
+	ldw	r0, r0
+	ssw	r0, -16                         # 2-byte Folded Spill
+	ldi	r6, 1
+	ldi	r4, 2
 	ldi	r0, 4
-	ssw	r0, -12                         # 2-byte Folded Spill
+	ssw	r0, -18                         # 2-byte Folded Spill
+	ssw	r5, -14                         # 2-byte Folded Spill
+	ssw	r5, -12                         # 2-byte Folded Spill
+	ssw	r5, -10                         # 2-byte Folded Spill
+	ssw	r5, -8                          # 2-byte Folded Spill
 	br	__LBB15_2
 __LBB15_3:                              # %for.cond.cleanup3
                                         #   in Loop: Header=BB15_2 Depth=1
 	add	r5, 1
 	ldi	r0, 8
 	cmp	r5, r0
-	ldi	r4, 1
+	ldi	r6, 1
 	beq	__LBB15_1
 	br	__LBB15_2
 __LBB15_2:                              # %for.body4.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB15_4 Depth 2
-                                        #       Child Loop BB15_16 Depth 3
+                                        #       Child Loop BB15_17 Depth 3
                                         #       Child Loop BB15_8 Depth 3
 	ldi	r0, -1
 	xor r5, r0, r0
-	and r0, r4, r0
-	shl	r5, r1, 4
-	ssw	r1, -10                         # 2-byte Folded Spill
+	and r0, r6, r0
 	br	__LBB15_4
-__LBB15_24:                             # %for.inc75
+__LBB15_26:                             # %for.inc92
                                         #   in Loop: Header=BB15_4 Depth=2
 	movens	r6, r0
 	add	r0, 2
 	ldi	r1, 6
 	cmp	r6, r1
-	ldi	r3, 2
+	ldi	r4, 2
 	blo	__LBB15_4
 	br	__LBB15_3
 __LBB15_4:                              # %for.body4
                                         #   Parent Loop BB15_2 Depth=1
                                         # =>  This Loop Header: Depth=2
-                                        #       Child Loop BB15_16 Depth 3
+                                        #       Child Loop BB15_17 Depth 3
                                         #       Child Loop BB15_8 Depth 3
 	movens	r0, r6
 	shl	r6, r0, 1
-	lsw	r1, -10                         # 2-byte Folded Reload
+	shl	r5, r1, 4
 	add r1, r0, r0
 	ldi	r1, state_matrix
 	ldw	r0, r1, r0
-	cmp	r0, r3
+	cmp	r0, r4
 	beq	__LBB15_7
 	br	__LBB15_5
 __LBB15_5:                              # %for.body4
                                         #   in Loop: Header=BB15_4 Depth=2
 	ldi	r1, 4
 	cmp	r0, r1
-	bne	__LBB15_24
+	bne	__LBB15_26
 	br	__LBB15_6
-__LBB15_6:                              # %for.body41.preheader
+__LBB15_6:                              # %for.body50.preheader
                                         #   in Loop: Header=BB15_4 Depth=2
 	ldi	r4, 3
-	ssw	r6, -8                          # 2-byte Folded Spill
-	br	__LBB15_16
-__LBB15_21:                             # %if.else62
-                                        #   in Loop: Header=BB15_16 Depth=3
-	ldi	r3, ways_no_take_unsafe
-	ldw	r3, r1
+	br	__LBB15_17
+__LBB15_24:                             # %if.else78
+                                        #   in Loop: Header=BB15_17 Depth=3
+	lsw	r1, -16                         # 2-byte Folded Reload
 	shl	r1, r0, 1
-	ldi	r2, x_unsafe
+	ldi	r2, x_blunder
 	stw	r0, r2, r5
-	ldi	r2, y_unsafe
+	ldi	r2, y_blunder
 	stw	r0, r2, r6
-	ldi	r2, dir_unsafe
+	ldi	r2, dir_blunder
 	stw	r0, r2, r4
-	movens	r3, r0
-__LBB15_22:                             # %if.end69.sink.split
-                                        #   in Loop: Header=BB15_16 Depth=3
 	add	r1, 1
+	ssw	r1, -16                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_blunder
 	stw	r0, r1
-__LBB15_23:                             # %if.end69
-                                        #   in Loop: Header=BB15_16 Depth=3
+__LBB15_25:                             # %if.end86
+                                        #   in Loop: Header=BB15_17 Depth=3
 	add	r4, 1
 	ldi	r0, 7
 	cmp	r4, r0
-	bne	__LBB15_16
-	br	__LBB15_24
-__LBB15_16:                             # %for.body41
+	bne	__LBB15_17
+	br	__LBB15_26
+__LBB15_17:                             # %for.body50
                                         #   Parent Loop BB15_2 Depth=1
                                         #     Parent Loop BB15_4 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
@@ -1456,60 +1557,81 @@ __LBB15_16:                             # %for.body41
 	jsr	try_move_take_king
 	ldi	r1, 2
 	cmp	r0, r1
-	blt	__LBB15_18
-	br	__LBB15_17
-__LBB15_17:                             # %if.then45
-                                        #   in Loop: Header=BB15_16 Depth=3
-	movens	r5, r6
-	ldi	r5, ways_take_king
-	ldw	r5, r1
-	shl	r1, r2, 1
-	ldi	r3, x_td
-	stw	r2, r3, r6
-	ldi	r3, y_td
-	lsw	r5, -8                          # 2-byte Folded Reload
-	stw	r2, r3, r5
-	ldi	r3, dir_td
-	stw	r2, r3, r4
-	ldi	r3, len_td
-	stw	r2, r3, r0
+	blt	__LBB15_19
+	br	__LBB15_18
+__LBB15_18:                             # %if.then54
+                                        #   in Loop: Header=BB15_17 Depth=3
+	lsw	r3, -8                          # 2-byte Folded Reload
+	shl	r3, r1, 1
+	ldi	r2, x_td
+	stw	r1, r2, r5
+	ldi	r2, y_td
+	stw	r1, r2, r6
+	ldi	r2, dir_td
+	stw	r1, r2, r4
+	ldi	r2, len_td
+	stw	r1, r2, r0
+	add	r3, 1
+	ssw	r3, -8                          # 2-byte Folded Spill
 	ldi	r0, ways_take_king
-	movens	r6, r5
-	lsw	r6, -8                          # 2-byte Folded Reload
-	br	__LBB15_22
-__LBB15_18:                             # %if.else51
-                                        #   in Loop: Header=BB15_16 Depth=3
+	stw	r0, r3
+	br	__LBB15_25
+__LBB15_19:                             # %if.else60
+                                        #   in Loop: Header=BB15_17 Depth=3
 	movens	r5, r0
 	movens	r6, r1
 	movens	r4, r2
 	jsr	try_move
 	ldi	r1, 0
 	cmp	r0, r1
-	beq	__LBB15_23
-	br	__LBB15_19
-__LBB15_19:                             # %if.then54
-                                        #   in Loop: Header=BB15_16 Depth=3
+	beq	__LBB15_25
+	br	__LBB15_20
+__LBB15_20:                             # %if.then62
+                                        #   in Loop: Header=BB15_17 Depth=3
 	movens	r5, r0
 	movens	r6, r1
 	movens	r4, r2
-	jsr	is_safe_move
-	ldi	r1, 0
+	jsr	level_safe_move
+	ldi	r1, 1
 	cmp	r0, r1
-	beq	__LBB15_21
-	br	__LBB15_20
-__LBB15_20:                             # %if.then57
-                                        #   in Loop: Header=BB15_16 Depth=3
-	ldi	r3, ways_no_take_safe
-	ldw	r3, r1
-	shl	r1, r0, 1
-	ldi	r2, x_safe
-	stw	r0, r2, r5
-	ldi	r2, y_safe
-	stw	r0, r2, r6
-	ldi	r2, dir_safe
-	stw	r0, r2, r4
-	movens	r3, r0
+	beq	__LBB15_23
+	br	__LBB15_21
+__LBB15_21:                             # %if.then62
+                                        #   in Loop: Header=BB15_17 Depth=3
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB15_24
 	br	__LBB15_22
+__LBB15_22:                             # %if.then66
+                                        #   in Loop: Header=BB15_17 Depth=3
+	lsw	r2, -12                         # 2-byte Folded Reload
+	shl	r2, r0, 1
+	ldi	r1, x_safe
+	stw	r0, r1, r5
+	ldi	r1, y_safe
+	stw	r0, r1, r6
+	ldi	r1, dir_safe
+	stw	r0, r1, r4
+	add	r2, 1
+	ssw	r2, -12                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_safe
+	stw	r0, r2
+	br	__LBB15_25
+__LBB15_23:                             # %if.then73
+                                        #   in Loop: Header=BB15_17 Depth=3
+	lsw	r2, -14                         # 2-byte Folded Reload
+	shl	r2, r0, 1
+	ldi	r1, x_unsafe
+	stw	r0, r1, r5
+	ldi	r1, y_unsafe
+	stw	r0, r1, r6
+	ldi	r1, dir_unsafe
+	stw	r0, r1, r4
+	add	r2, 1
+	ssw	r2, -14                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_unsafe
+	stw	r0, r2
+	br	__LBB15_25
 __LBB15_7:                              # %for.body10.preheader
                                         #   in Loop: Header=BB15_4 Depth=2
 	ldi	r4, 3
@@ -1527,136 +1649,156 @@ __LBB15_8:                              # %for.body10
 	br	__LBB15_9
 __LBB15_9:                              # %if.then12
                                         #   in Loop: Header=BB15_8 Depth=3
-	ldi	r3, ways_take_checker
-	ldw	r3, r0
-	shl	r0, r1, 1
-	ldi	r2, x_tc
-	stw	r1, r2, r5
-	ldi	r2, y_tc
-	stw	r1, r2, r6
-	ldi	r2, dir_tc
-	add r1, r2, r1
-	movens	r3, r2
-	br	__LBB15_14
+	lsw	r2, -10                         # 2-byte Folded Reload
+	shl	r2, r0, 1
+	ldi	r1, x_tc
+	stw	r0, r1, r5
+	ldi	r1, y_tc
+	stw	r0, r1, r6
+	ldi	r1, dir_tc
+	stw	r0, r1, r4
+	add	r2, 1
+	ssw	r2, -10                         # 2-byte Folded Spill
+	ldi	r0, ways_take_checker
+	stw	r0, r2
+	br	__LBB15_16
 __LBB15_10:                             # %if.else
                                         #   in Loop: Header=BB15_8 Depth=3
 	ldi	r1, 1
 	cmp	r0, r1
-	bne	__LBB15_15
+	bne	__LBB15_16
 	br	__LBB15_11
 __LBB15_11:                             # %if.then17
                                         #   in Loop: Header=BB15_8 Depth=3
 	movens	r5, r0
 	movens	r6, r1
 	movens	r4, r2
-	jsr	is_safe_move
-	ldi	r1, 0
+	jsr	level_safe_move
+	ldi	r1, 1
 	cmp	r0, r1
-	beq	__LBB15_13
+	beq	__LBB15_14
 	br	__LBB15_12
-__LBB15_12:                             # %if.then19
+__LBB15_12:                             # %if.then17
                                         #   in Loop: Header=BB15_8 Depth=3
-	ldi	r3, ways_no_take_safe
-	ldw	r3, r0
-	shl	r0, r1, 1
-	ldi	r2, x_safe
-	stw	r1, r2, r5
-	ldi	r2, y_safe
-	stw	r1, r2, r6
-	ldi	r2, dir_safe
-	add r1, r2, r1
-	movens	r3, r2
-	br	__LBB15_14
-__LBB15_13:                             # %if.else24
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB15_15
+	br	__LBB15_13
+__LBB15_13:                             # %if.then20
                                         #   in Loop: Header=BB15_8 Depth=3
-	ldi	r3, ways_no_take_unsafe
-	ldw	r3, r0
-	shl	r0, r1, 1
-	ldi	r2, x_unsafe
-	stw	r1, r2, r5
-	ldi	r2, y_unsafe
-	stw	r1, r2, r6
-	ldi	r2, dir_unsafe
-	add r1, r2, r1
-	movens	r3, r2
-__LBB15_14:                             # %if.end30.sink.split
+	lsw	r2, -12                         # 2-byte Folded Reload
+	shl	r2, r0, 1
+	ldi	r1, x_safe
+	stw	r0, r1, r5
+	ldi	r1, y_safe
+	stw	r0, r1, r6
+	ldi	r1, dir_safe
+	stw	r0, r1, r4
+	add	r2, 1
+	ssw	r2, -12                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_safe
+	stw	r0, r2
+	br	__LBB15_16
+__LBB15_14:                             # %if.then27
                                         #   in Loop: Header=BB15_8 Depth=3
-	stw	r1, r4
-	add	r0, 1
-	stw	r2, r0
-__LBB15_15:                             # %if.end30
+	lsw	r2, -14                         # 2-byte Folded Reload
+	shl	r2, r0, 1
+	ldi	r1, x_unsafe
+	stw	r0, r1, r5
+	ldi	r1, y_unsafe
+	stw	r0, r1, r6
+	ldi	r1, dir_unsafe
+	stw	r0, r1, r4
+	add	r2, 1
+	ssw	r2, -14                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_unsafe
+	stw	r0, r2
+	br	__LBB15_16
+__LBB15_15:                             # %if.else32
+                                        #   in Loop: Header=BB15_8 Depth=3
+	lsw	r1, -16                         # 2-byte Folded Reload
+	shl	r1, r0, 1
+	ldi	r2, x_blunder
+	stw	r0, r2, r5
+	ldi	r2, y_blunder
+	stw	r0, r2, r6
+	ldi	r2, dir_blunder
+	stw	r0, r2, r4
+	add	r1, 1
+	ssw	r1, -16                         # 2-byte Folded Spill
+	ldi	r0, ways_no_take_blunder
+	stw	r0, r1
+__LBB15_16:                             # %if.end39
                                         #   in Loop: Header=BB15_8 Depth=3
 	add	r4, 1
 	ldi	r0, 7
 	cmp	r4, r0
-	beq	__LBB15_24
+	beq	__LBB15_26
 	br	__LBB15_8
 __LBB15_1:                              # %for.cond.cleanup
-	ldi	r0, ways_take_king
-	ldw	r0, r0
 	ldi	r2, 0
-	cmp	r0, r2
-	bgt	__LBB15_25
-	br	__LBB15_34
-__LBB15_25:                             # %if.then81
-	ldi	r3, 0
-	ldi	r1, 1
-	cmp	r0, r1
-	beq	__LBB15_33
-	br	__LBB15_26
-__LBB15_26:                             # %if.else.i
-	ldi	r1, 3
-	ldi	r2, 4
-	cmp	r0, r2
-	blo	__LBB15_31
-	br	__LBB15_27
-__LBB15_27:                             # %if.else5.i
-	ldi	r1, 7
-	ldi	r2, 8
-	cmp	r0, r2
-	blo	__LBB15_31
+	lsw	r5, -8                          # 2-byte Folded Reload
+	cmp	r5, r2
+	bgt	__LBB15_27
+	br	__LBB15_36
+__LBB15_27:                             # %if.then98
+	ldi	r0, 1
+	cmp	r5, r0
+	beq	__LBB15_35
 	br	__LBB15_28
-__LBB15_28:                             # %if.else8.i
-	ldi	r1, 15
-	ldi	r2, 16
-	cmp	r0, r2
-	blo	__LBB15_31
+__LBB15_28:                             # %if.else.i
+	ldi	r0, 3
+	ldi	r1, 4
+	cmp	r5, r1
+	blo	__LBB15_33
 	br	__LBB15_29
-__LBB15_29:                             # %if.else11.i
-	ldi	r1, 63
-	ldi	r2, 31
-	cmp	r0, r2
-	bhi	__LBB15_31
-# %bb.30:                               # %if.else11.i
-	movens	r2, r1
-__LBB15_31:                             # %if.end19.i
-	ldi	r2, seed
-__LBB15_32:                             # %while.cond.i
+__LBB15_29:                             # %if.else5.i
+	ldi	r0, 7
+	ldi	r1, 8
+	cmp	r5, r1
+	blo	__LBB15_33
+	br	__LBB15_30
+__LBB15_30:                             # %if.else8.i
+	ldi	r0, 15
+	ldi	r1, 16
+	cmp	r5, r1
+	blo	__LBB15_33
+	br	__LBB15_31
+__LBB15_31:                             # %if.else11.i
+	ldi	r0, 63
+	ldi	r1, 31
+	cmp	r5, r1
+	bhi	__LBB15_33
+# %bb.32:                               # %if.else11.i
+	movens	r1, r0
+__LBB15_33:                             # %if.end19.i
+	ldi	r1, seed
+__LBB15_34:                             # %while.cond.i
                                         # =>This Inner Loop Header: Depth=1
-	ldw	r2, r3
-	shl	r3, r3, 7
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shra	r3, r3, 8
-	shra	r3, r3, 9-8
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shl	r3, r3, 8
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shr	r3, r3, 8
-	and r3, r1, r3
-	cmp	r3, r0
-	bge	__LBB15_32
-	br	__LBB15_33
-__LBB15_33:                             # %get_rand.exit
-	shl	r3, r4, 1
+	ldw	r1, r2
+	shl	r2, r2, 7
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shra	r2, r2, 8
+	shra	r2, r2, 9-8
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shl	r2, r2, 8
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shr	r2, r2, 8
+	and r2, r0, r2
+	cmp	r2, r5
+	bge	__LBB15_34
+	br	__LBB15_35
+__LBB15_35:                             # %get_rand.exit
+	shl	r2, r4, 1
 	ldi	r0, dir_td
 	ldw	r4, r0, r2
 	ldi	r0, y_td
@@ -1667,149 +1809,143 @@ __LBB15_33:                             # %get_rand.exit
 	movens	r3, r5
 	ldw	r4, r5, r3
 	jsr	execute_move
-	ldw	r4, r5, r0
-	br	__LBB15_80
-__LBB15_34:                             # %if.else88
-	ldi	r0, ways_take_checker
-	ldw	r0, r0
-	cmp	r0, r4
-	blt	__LBB15_44
-	br	__LBB15_35
-__LBB15_35:                             # %if.then90
-	ldi	r3, 0
-	ldi	r1, 1
-	cmp	r0, r1
-	beq	__LBB15_43
-	br	__LBB15_36
-__LBB15_36:                             # %if.else.i170
-	ldi	r1, 3
-	ldi	r2, 4
-	cmp	r0, r2
-	blo	__LBB15_41
+	ldw	r4, r5, r4
+	br	__LBB15_83
+__LBB15_36:                             # %if.else105
+	lsw	r5, -10                         # 2-byte Folded Reload
+	cmp	r5, r6
+	blt	__LBB15_46
 	br	__LBB15_37
-__LBB15_37:                             # %if.else5.i172
-	ldi	r1, 7
-	ldi	r2, 8
-	cmp	r0, r2
-	blo	__LBB15_41
+__LBB15_37:                             # %if.then107
+	ldi	r0, 1
+	cmp	r5, r0
+	beq	__LBB15_45
 	br	__LBB15_38
-__LBB15_38:                             # %if.else8.i174
-	ldi	r1, 15
-	ldi	r2, 16
-	cmp	r0, r2
-	blo	__LBB15_41
+__LBB15_38:                             # %if.else.i206
+	ldi	r0, 3
+	ldi	r1, 4
+	cmp	r5, r1
+	blo	__LBB15_43
 	br	__LBB15_39
-__LBB15_39:                             # %if.else11.i176
-	ldi	r1, 63
-	ldi	r2, 31
-	cmp	r0, r2
-	bhi	__LBB15_41
-# %bb.40:                               # %if.else11.i176
-	movens	r2, r1
-__LBB15_41:                             # %if.end19.i179
-	ldi	r2, seed
-__LBB15_42:                             # %while.cond.i181
+__LBB15_39:                             # %if.else5.i208
+	ldi	r0, 7
+	ldi	r1, 8
+	cmp	r5, r1
+	blo	__LBB15_43
+	br	__LBB15_40
+__LBB15_40:                             # %if.else8.i210
+	ldi	r0, 15
+	ldi	r1, 16
+	cmp	r5, r1
+	blo	__LBB15_43
+	br	__LBB15_41
+__LBB15_41:                             # %if.else11.i212
+	ldi	r0, 63
+	ldi	r1, 31
+	cmp	r5, r1
+	bhi	__LBB15_43
+# %bb.42:                               # %if.else11.i212
+	movens	r1, r0
+__LBB15_43:                             # %if.end19.i215
+	ldi	r1, seed
+__LBB15_44:                             # %while.cond.i217
                                         # =>This Inner Loop Header: Depth=1
-	ldw	r2, r3
-	shl	r3, r3, 7
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shra	r3, r3, 8
-	shra	r3, r3, 9-8
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shl	r3, r3, 8
-	ldw	r2, r4
-	xor r4, r3, r3
-	stw	r2, r3
-	ldw	r2, r3
-	shr	r3, r3, 8
-	and r3, r1, r3
-	cmp	r3, r0
-	bge	__LBB15_42
-	br	__LBB15_43
-__LBB15_43:                             # %get_rand.exit192
-	shl	r3, r0, 1
+	ldw	r1, r2
+	shl	r2, r2, 7
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shra	r2, r2, 8
+	shra	r2, r2, 9-8
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shl	r2, r2, 8
+	ldw	r1, r3
+	xor r3, r2, r2
+	stw	r1, r2
+	ldw	r1, r2
+	shr	r2, r2, 8
+	and r2, r0, r2
+	cmp	r2, r5
+	bge	__LBB15_44
+	br	__LBB15_45
+__LBB15_45:                             # %get_rand.exit228
+	shl	r2, r0, 1
 	ldi	r1, dir_tc
 	ldw	r0, r1, r2
 	ldi	r1, y_tc
 	ldw	r0, r1, r1
 	ldi	r3, x_tc
 	ldw	r0, r3, r0
-	ldi	r4, 2
 	movens	r4, r3
 	jsr	execute_move
-	movens	r4, r0
-	br	__LBB15_80
-__LBB15_44:                             # %if.else96
-	ldi	r0, ways_no_take_safe
-	ldw	r0, r1
-	cmp	r1, r4
-	blt	__LBB15_62
-	br	__LBB15_45
-__LBB15_45:                             # %if.then98
-	ldi	r3, 0
-	ldi	r0, 1
-	cmp	r1, r0
-	beq	__LBB15_53
-	br	__LBB15_46
-__LBB15_46:                             # %if.else.i196
-	ldi	r2, 3
-	ldi	r0, 4
-	cmp	r1, r0
-	blo	__LBB15_51
+	br	__LBB15_83
+__LBB15_46:                             # %if.else113
+	lsw	r4, -12                         # 2-byte Folded Reload
+	cmp	r4, r6
+	blt	__LBB15_64
 	br	__LBB15_47
-__LBB15_47:                             # %if.else5.i198
-	ldi	r2, 7
-	ldi	r0, 8
-	cmp	r1, r0
-	blo	__LBB15_51
+__LBB15_47:                             # %if.then115
+	ldi	r0, 1
+	cmp	r4, r0
+	beq	__LBB15_55
 	br	__LBB15_48
-__LBB15_48:                             # %if.else8.i200
-	ldi	r2, 15
-	ldi	r0, 16
-	cmp	r1, r0
-	blo	__LBB15_51
+__LBB15_48:                             # %if.else.i232
+	ldi	r1, 3
+	ldi	r0, 4
+	cmp	r4, r0
+	blo	__LBB15_53
 	br	__LBB15_49
-__LBB15_49:                             # %if.else11.i202
-	ldi	r2, 63
+__LBB15_49:                             # %if.else5.i234
+	ldi	r1, 7
+	ldi	r0, 8
+	cmp	r4, r0
+	blo	__LBB15_53
+	br	__LBB15_50
+__LBB15_50:                             # %if.else8.i236
+	ldi	r1, 15
+	ldi	r0, 16
+	cmp	r4, r0
+	blo	__LBB15_53
+	br	__LBB15_51
+__LBB15_51:                             # %if.else11.i238
+	ldi	r1, 63
 	ldi	r0, 31
-	cmp	r1, r0
-	bhi	__LBB15_51
-# %bb.50:                               # %if.else11.i202
-	movens	r0, r2
-__LBB15_51:                             # %if.end19.i205
+	cmp	r4, r0
+	bhi	__LBB15_53
+# %bb.52:                               # %if.else11.i238
+	movens	r0, r1
+__LBB15_53:                             # %if.end19.i241
 	ldi	r0, seed
-__LBB15_52:                             # %while.cond.i207
+__LBB15_54:                             # %while.cond.i243
                                         # =>This Inner Loop Header: Depth=1
+	ldw	r0, r2
+	shl	r2, r2, 7
 	ldw	r0, r3
-	shl	r3, r3, 7
-	ldw	r0, r4
-	xor r4, r3, r3
-	stw	r0, r3
+	xor r3, r2, r2
+	stw	r0, r2
+	ldw	r0, r2
+	shra	r2, r2, 8
+	shra	r2, r2, 9-8
 	ldw	r0, r3
-	shra	r3, r3, 8
-	shra	r3, r3, 9-8
-	ldw	r0, r4
-	xor r4, r3, r3
-	stw	r0, r3
+	xor r3, r2, r2
+	stw	r0, r2
+	ldw	r0, r2
+	shl	r2, r2, 8
 	ldw	r0, r3
-	shl	r3, r3, 8
-	ldw	r0, r4
-	xor r4, r3, r3
-	stw	r0, r3
-	ldw	r0, r3
-	shr	r3, r3, 8
-	and r3, r2, r3
-	cmp	r3, r1
-	bge	__LBB15_52
-	br	__LBB15_53
-__LBB15_53:                             # %get_rand.exit218
-	shl	r3, r0, 1
+	xor r3, r2, r2
+	stw	r0, r2
+	ldw	r0, r2
+	shr	r2, r2, 8
+	and r2, r1, r2
+	cmp	r2, r4
+	bge	__LBB15_54
+	br	__LBB15_55
+__LBB15_55:                             # %get_rand.exit254
+	shl	r2, r0, 1
 	ldi	r1, y_safe
 	ldw	r0, r1, r2
 	ldi	r1, x_safe
@@ -1828,16 +1964,16 @@ __LBB15_53:                             # %get_rand.exit218
 	ldi	r5, 3
 	ldi	r3, 1
 	cmp	r6, r3
-	beq	__LBB15_55
-# %bb.54:                               # %get_rand.exit218
+	beq	__LBB15_57
+# %bb.56:                               # %get_rand.exit254
 	movens	r6, r5
-__LBB15_55:                             # %get_rand.exit218
+__LBB15_57:                             # %get_rand.exit254
 	ldi	r3, 0
 	cmp	r1, r3
-	beq	__LBB15_57
-# %bb.56:                               # %get_rand.exit218
+	beq	__LBB15_59
+# %bb.58:                               # %get_rand.exit254
 	movens	r6, r5
-__LBB15_57:                             # %get_rand.exit218
+__LBB15_59:                             # %get_rand.exit254
 	ldi	r6, delta_column
 	ldw	r4, r6, r6
 	ldi	r4, state_matrix
@@ -1852,16 +1988,16 @@ __LBB15_57:                             # %get_rand.exit218
 	ldi	r3, 4
 	ldi	r4, 2
 	cmp	r5, r4
-	beq	__LBB15_59
-# %bb.58:                               # %get_rand.exit218
+	beq	__LBB15_61
+# %bb.60:                               # %get_rand.exit254
 	movens	r5, r3
-__LBB15_59:                             # %get_rand.exit218
+__LBB15_61:                             # %get_rand.exit254
 	ldi	r4, 7
 	cmp	r1, r4
-	beq	__LBB15_61
-# %bb.60:                               # %get_rand.exit218
+	beq	__LBB15_63
+# %bb.62:                               # %get_rand.exit254
 	movens	r5, r3
-__LBB15_61:                             # %get_rand.exit218
+__LBB15_63:                             # %get_rand.exit254
 	add r6, r2, r2
 	shl	r2, r4, 1
 	shl	r1, r5, 4
@@ -1882,150 +2018,163 @@ __LBB15_61:                             # %get_rand.exit218
 	ldi	r1, cs_address
 	ldw	r1, r1
 	stw	r1, r0
-	ldi	r0, 1
-	br	__LBB15_80
-__LBB15_62:                             # %if.else104
-	ldi	r0, ways_no_take_unsafe
-	ldw	r0, r0
-	cmp	r0, r4
-	beq	__LBB15_71
-	br	__LBB15_63
-__LBB15_63:                             # %if.end.i223
-	cmp	r0, r3
-	blt	__LBB15_69
-	br	__LBB15_64
-__LBB15_64:                             # %if.else.i225
-	ldi	r4, 3
-	ldi	r1, 4
-	cmp	r0, r1
-	blo	__LBB15_69
+	ldi	r4, 1
+	br	__LBB15_83
+__LBB15_64:                             # %if.else121
+	lsw	r4, -14                         # 2-byte Folded Reload
+	cmp	r4, r6
+	blt	__LBB15_82
 	br	__LBB15_65
-__LBB15_65:                             # %if.else5.i227
-	ldi	r1, 8
-	cmp	r0, r1
-	ldi	r4, 7
-	blo	__LBB15_69
+__LBB15_65:                             # %if.then123
+	ldi	r5, 1
+	cmp	r4, r5
+	beq	__LBB15_73
 	br	__LBB15_66
-__LBB15_66:                             # %if.else8.i229
-	ldi	r4, 15
-	ldi	r1, 16
-	cmp	r0, r1
-	blo	__LBB15_69
+__LBB15_66:                             # %if.else.i261
+	ldi	r1, 3
+	ldi	r0, 4
+	cmp	r4, r0
+	blo	__LBB15_71
 	br	__LBB15_67
-__LBB15_67:                             # %if.else11.i231
-	ldi	r4, 63
-	ldi	r1, 31
-	cmp	r0, r1
-	bhi	__LBB15_69
-# %bb.68:                               # %if.else11.i231
-	movens	r1, r4
-__LBB15_69:                             # %if.end19.i234
-	ldi	r1, seed
-__LBB15_70:                             # %while.cond.i236
+__LBB15_67:                             # %if.else5.i263
+	ldi	r0, 8
+	cmp	r4, r0
+	ldi	r1, 7
+	blo	__LBB15_71
+	br	__LBB15_68
+__LBB15_68:                             # %if.else8.i265
+	ldi	r1, 15
+	ldi	r0, 16
+	cmp	r4, r0
+	blo	__LBB15_71
+	br	__LBB15_69
+__LBB15_69:                             # %if.else11.i267
+	ldi	r1, 63
+	ldi	r0, 31
+	cmp	r4, r0
+	bhi	__LBB15_71
+# %bb.70:                               # %if.else11.i267
+	movens	r0, r1
+__LBB15_71:                             # %if.end19.i270
+	ldi	r0, seed
+__LBB15_72:                             # %while.cond.i272
                                         # =>This Inner Loop Header: Depth=1
-	ldw	r1, r2
+	ldw	r0, r2
 	shl	r2, r2, 7
-	ldw	r1, r3
+	ldw	r0, r3
 	xor r3, r2, r2
-	stw	r1, r2
-	ldw	r1, r2
+	stw	r0, r2
+	ldw	r0, r2
 	shra	r2, r2, 8
 	shra	r2, r2, 9-8
-	ldw	r1, r3
+	ldw	r0, r3
 	xor r3, r2, r2
-	stw	r1, r2
-	ldw	r1, r2
+	stw	r0, r2
+	ldw	r0, r2
 	shl	r2, r2, 8
-	ldw	r1, r3
+	ldw	r0, r3
 	xor r3, r2, r2
-	stw	r1, r2
-	ldw	r1, r2
+	stw	r0, r2
+	ldw	r0, r2
 	shr	r2, r2, 8
-	and r2, r4, r2
-	cmp	r2, r0
-	bge	__LBB15_70
-	br	__LBB15_71
-__LBB15_71:                             # %get_rand.exit247
+	and r2, r1, r2
+	cmp	r2, r4
+	bge	__LBB15_72
+	br	__LBB15_73
+__LBB15_73:                             # %get_rand.exit283
 	shl	r2, r0, 1
 	ldi	r1, y_unsafe
-	ldw	r0, r1, r3
+	ldw	r0, r1, r2
 	ldi	r1, x_unsafe
-	ldw	r0, r1, r1
-	ldi	r2, dir_unsafe
-	ldw	r0, r2, r0
+	ldw	r0, r1, r3
+	ldi	r1, dir_unsafe
+	ldw	r0, r1, r0
 	shl	r0, r4, 1
 	ldi	r0, delta_row
 	ldw	r4, r0, r0
-	add r0, r1, r0
-	shl	r1, r1, 4
-	ssw	r3, -8                          # 2-byte Folded Spill
-	shl	r3, r2, 1
-	add r1, r2, r1
-	ldi	r2, state_matrix
-	ldw	r1, r2, r5
+	add r0, r3, r1
+	shl	r3, r0, 4
+	shl	r2, r3, 1
+	add r0, r3, r0
+	ldi	r3, state_matrix
+	ldw	r0, r3, r6
 	ldi	r3, 3
-	ldi	r2, 1
-	cmp	r5, r2
-	beq	__LBB15_73
-# %bb.72:                               # %get_rand.exit247
-	movens	r5, r3
-__LBB15_73:                             # %get_rand.exit247
-	ldi	r6, delta_column
-	ldi	r2, 0
-	cmp	r0, r2
+	cmp	r6, r5
 	beq	__LBB15_75
-# %bb.74:                               # %get_rand.exit247
-	movens	r5, r3
-__LBB15_75:                             # %get_rand.exit247
+# %bb.74:                               # %get_rand.exit283
+	movens	r6, r3
+__LBB15_75:                             # %get_rand.exit283
+	ldi	r5, 0
+	cmp	r1, r5
+	beq	__LBB15_77
+# %bb.76:                               # %get_rand.exit283
+	movens	r6, r3
+__LBB15_77:                             # %get_rand.exit283
+	ldi	r6, delta_column
 	ldw	r4, r6, r6
 	ldi	r4, state_matrix
-	stw	r1, r4, r2
+	stw	r0, r4, r5
 	ldi	r4, index_to_cell.cell_map
-	ldw	r1, r4, r1
-	ldi	r5, -2
-	and r1, r5, r4
-	ldi	r1, cb_address
-	ldw	r1, r1
-	stw	r1, r4, r2
-	ldi	r2, 2
-	cmp	r3, r2
-	beq	__LBB15_77
-# %bb.76:                               # %get_rand.exit247
-	ssw	r3, -12                         # 2-byte Folded Spill
-__LBB15_77:                             # %get_rand.exit247
-	ldi	r2, 7
-	cmp	r0, r2
+	ldw	r0, r4, r0
+	ldi	r4, -2
+	and r0, r4, r4
+	ldi	r0, cb_address
+	ldw	r0, r0
+	stw	r0, r4, r5
+	ldi	r4, 2
+	cmp	r3, r4
 	beq	__LBB15_79
-# %bb.78:                               # %get_rand.exit247
-	ssw	r3, -12                         # 2-byte Folded Spill
-__LBB15_79:                             # %get_rand.exit247
-	lsw	r2, -8                          # 2-byte Folded Reload
+# %bb.78:                               # %get_rand.exit283
+	ssw	r3, -18                         # 2-byte Folded Spill
+__LBB15_79:                             # %get_rand.exit283
+	ldi	r4, 7
+	cmp	r1, r4
+	beq	__LBB15_81
+# %bb.80:                               # %get_rand.exit283
+	ssw	r3, -18                         # 2-byte Folded Spill
+__LBB15_81:                             # %get_rand.exit283
 	add r6, r2, r2
 	shl	r2, r3, 1
-	shl	r0, r4, 4
+	shl	r1, r4, 4
 	add r4, r3, r3
 	ldi	r4, state_matrix
-	lsw	r6, -12                         # 2-byte Folded Reload
-	stw	r3, r4, r6
+	lsw	r5, -18                         # 2-byte Folded Reload
+	stw	r3, r4, r5
 	ldi	r4, index_to_cell.cell_map
 	ldw	r3, r4, r3
-	and r3, r5, r3
-	stw	r1, r3, r6
-	ldi	r1, chosen_col
-	stw	r1, r2
-	ldi	r1, chosen_row
-	stw	r1, r0
-	shl	r2, r1, 3
-	add r1, r0, r0
+	ldi	r4, -2
+	and r3, r4, r3
+	stw	r0, r3, r5
+	ldi	r0, chosen_col
+	stw	r0, r2
+	ldi	r0, chosen_row
+	stw	r0, r1
+	shl	r2, r0, 3
+	add r0, r1, r0
 	ldi	r1, cs_address
 	ldw	r1, r1
 	stw	r1, r0
-	ldi	r0, 1
-__LBB15_80:                             # %return
+	ldi	r4, 1
+	br	__LBB15_83
+__LBB15_82:                             # %if.else129
+	lsw	r0, -16                         # 2-byte Folded Reload
+	jsr	get_rand
+	shl	r0, r2, 1
+	ldi	r0, x_blunder
+	ldw	r2, r0, r0
+	ldi	r1, y_blunder
+	ldw	r2, r1, r1
+	ldi	r3, dir_blunder
+	ldw	r2, r3, r2
+	movens	r6, r3
+	jsr	execute_move
+	movens	r6, r4
+__LBB15_83:                             # %return
+	movens	r4, r0
 	lsw	r6, -6                          # 2-byte Folded Reload
 	lsw	r5, -4                          # 2-byte Folded Reload
 	lsw	r4, -2                          # 2-byte Folded Reload
-	addsp	12
+	addsp	18
 	pop	fp
 	rts
                                         # -- End function
@@ -3930,6 +4079,9 @@ ways_no_take_safe>                      # @ways_no_take_safe
 ways_no_take_unsafe>                    # @ways_no_take_unsafe
 	dc	0                               # 0x0
 
+ways_no_take_blunder>                   # @ways_no_take_blunder
+	dc	0                               # 0x0
+
 x_tc>                                   # @x_tc
 	ds	126
 
@@ -3955,6 +4107,15 @@ y_unsafe>                               # @y_unsafe
 	ds	126
 
 dir_unsafe>                             # @dir_unsafe
+	ds	126
+
+x_blunder>                              # @x_blunder
+	ds	126
+
+y_blunder>                              # @y_blunder
+	ds	126
+
+dir_blunder>                            # @dir_blunder
 	ds	126
 
 x_td>                                   # @x_td

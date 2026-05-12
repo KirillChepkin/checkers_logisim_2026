@@ -3,7 +3,7 @@
 
 #include "defines.h"
 
-int is_safe_move(int row, int column, int direction);
+int level_safe_move(int row, int column, int direction);
 int bot_first_move();
 int bot_next_move();
 

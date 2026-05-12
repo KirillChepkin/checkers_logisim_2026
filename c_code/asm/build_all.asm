@@ -1,5 +1,5 @@
 ### SECTION: .text
-rsect _build_all_c_1804289383
+rsect _build_all_c_16807
 
 
 
@@ -3525,7 +3525,7 @@ check_game_over>                        # -- Begin function check_game_over
 	ldi	r3, 7
 	ldi	r0, count_moves_no_takes
 	ldw	r0, r0
-	ldi	r1, 19
+	ldi	r1, 39
 	cmp	r0, r1
 	bgt	__LBB21_24
 	br	__LBB21_1

@@ -26,7 +26,7 @@
 #define WHITE 0
 #define BLACK 1
 
-#define LIMIT_MOVES_NO_TAKES 20
+#define LIMIT_MOVES_NO_TAKES 40
 
 #define TIME_TO_WAITING 50
 
